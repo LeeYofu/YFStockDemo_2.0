@@ -532,7 +532,7 @@
         
         _bottomBarIndex = bottomBarIndex;
         
-        // belowView刷新重绘线条
+//        // belowView刷新重绘线条
         [self updateData];
         [self tableViewReloadData];
     }

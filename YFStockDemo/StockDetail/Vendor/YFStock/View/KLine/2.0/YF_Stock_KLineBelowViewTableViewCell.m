@@ -14,6 +14,7 @@
 @property (nonatomic, strong) CAShapeLayer *layer2;
 @property (nonatomic, strong) CAShapeLayer *layer3;
 @property (nonatomic, strong) CAShapeLayer *layer4;
+@property (nonatomic, strong) CAShapeLayer *barLayer;
 
 @property (nonatomic, strong) UIView *partLine;
 
@@ -77,6 +78,16 @@
     return _layer4;
 }
 
+- (CAShapeLayer *)barLayer {
+    
+    if (_barLayer == nil) {
+        
+        _barLayer = [self getMALayer];
+        [self.contentView.layer addSublayer:_barLayer];
+    }
+    return _barLayer;
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -122,12 +133,18 @@
     }
 }
 
-- (void)drawWithBottomBarIndex:(NSInteger)bottomBarIndex {
+- (void)clearPath {
     
     self.layer1.path = nil;
     self.layer2.path = nil;
     self.layer3.path = nil;
     self.layer4.path = nil;
+    self.barLayer.path = nil;
+}
+
+- (void)drawWithBottomBarIndex:(NSInteger)bottomBarIndex {
+    
+    [self clearPath];
     
     switch (bottomBarIndex) {
         case YFStockBottomBarIndex_MACD:
@@ -264,11 +281,11 @@
     
     [CATransaction begin];
     [CATransaction setDisableActions:YES]; 
-    self.layer3.fillColor = strokeColor.CGColor;
-    self.layer3.strokeColor = strokeColor.CGColor;
+    self.barLayer.fillColor = strokeColor.CGColor;
+    self.barLayer.strokeColor = strokeColor.CGColor;
     [CATransaction commit];
     
-    self.layer3.path = path.CGPath;
+    self.barLayer.path = path.CGPath;
     
     // DIF  DEA
     UIBezierPath *bezierPath1 = [self getBezierPathWithKey:@"MACD_DIF"];

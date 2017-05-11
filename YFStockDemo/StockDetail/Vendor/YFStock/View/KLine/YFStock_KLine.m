@@ -8,8 +8,6 @@
 
 #import "YFStock_KLine.h"
 #import "YFStock_ScrollView.h"
-#import "YFStock_KLineView.h"
-#import "YFStock_KLineBottomView.h"
 #import "YFStock_KLineMaskView.h"
 #import "YFStock_DataHandler.h"
 #import "YFStock_TopBar.h"

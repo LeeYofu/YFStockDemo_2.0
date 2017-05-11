@@ -10,7 +10,6 @@
 
 #import <UIKit/UIKit.h>
 #import "YFStock_KLineModel.h"
-#import "YFStock_ScrollView.h"
 
 @interface YFStock_KLineMaskView : UIView
 

@@ -8,7 +8,6 @@
 
 #import "YFStock_TimeLine.h"
 #import "YFStock_Header.h"
-#import "YFStock_ScrollView.h"
 #import "YFStock_TimeLineView.h"
 #import "YFStock_DataHandler.h"
 #import "YFStock_TimeLineMaskView.h"

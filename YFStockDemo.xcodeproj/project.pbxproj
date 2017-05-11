@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2327CAF81EC1BF4800AB00DE /* StockDetailFullScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2327CAF71EC1BF4800AB00DE /* StockDetailFullScreenView.m */; };
+		2339F0181EC4682000320EDD /* YFStock_ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2339F0171EC4682000320EDD /* YFStock_ScrollView.m */; };
 		23426DC21EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23426DC11EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m */; };
 		23426DC51EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23426DC41EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m */; };
 		23AFEE591EADDA8F00EA7ECC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEE581EADDA8F00EA7ECC /* main.m */; };
@@ -45,20 +46,13 @@
 		23AFEEF81EADDAAF00EA7ECC /* OpenTimeList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23AFEEAF1EADDAAF00EA7ECC /* OpenTimeList.plist */; };
 		23AFEEF91EADDAAF00EA7ECC /* UIView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEB11EADDAAF00EA7ECC /* UIView+Category.m */; };
 		23AFEEFA1EADDAAF00EA7ECC /* YFStock_DataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEB31EADDAAF00EA7ECC /* YFStock_DataHandler.m */; };
-		23AFEEFB1EADDAAF00EA7ECC /* YFKline.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEB71EADDAAF00EA7ECC /* YFKline.m */; };
-		23AFEEFC1EADDAAF00EA7ECC /* YFMA_BOLLLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEB91EADDAAF00EA7ECC /* YFMA_BOLLLine.m */; };
 		23AFEEFD1EADDAAF00EA7ECC /* YFStock_KLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEBB1EADDAAF00EA7ECC /* YFStock_KLine.m */; };
-		23AFEEFE1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEBD1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.m */; };
-		23AFEEFF1EADDAAF00EA7ECC /* YFStock_KLineBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEBF1EADDAAF00EA7ECC /* YFStock_KLineBottomView.m */; };
 		23AFEF001EADDAAF00EA7ECC /* YFStock_KLineMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEC11EADDAAF00EA7ECC /* YFStock_KLineMaskView.m */; };
-		23AFEF011EADDAAF00EA7ECC /* YFStock_KLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEC31EADDAAF00EA7ECC /* YFStock_KLineView.m */; };
 		23AFEF021EADDAAF00EA7ECC /* YFStock_TopBarMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEC61EADDAAF00EA7ECC /* YFStock_TopBarMaskView.m */; };
 		23AFEF031EADDAAF00EA7ECC /* YFStock_TopBarMaskViewCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEC81EADDAAF00EA7ECC /* YFStock_TopBarMaskViewCollectionViewCell.m */; };
-		23AFEF041EADDAAF00EA7ECC /* YFStock_ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEECB1EADDAAF00EA7ECC /* YFStock_ScrollView.m */; };
 		23AFEF051EADDAAF00EA7ECC /* YFStock_TimeLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEECE1EADDAAF00EA7ECC /* YFStock_TimeLine.m */; };
 		23AFEF061EADDAAF00EA7ECC /* YFStock_TimeLineMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEED01EADDAAF00EA7ECC /* YFStock_TimeLineMaskView.m */; };
 		23AFEF071EADDAAF00EA7ECC /* YFStock_TimeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEED21EADDAAF00EA7ECC /* YFStock_TimeLineView.m */; };
-		23AFEF081EADDAAF00EA7ECC /* YFStock_TimeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEED51EADDAAF00EA7ECC /* YFStock_TimeView.m */; };
 		23AFEF091EADDAAF00EA7ECC /* YFStock_TopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEED81EADDAAF00EA7ECC /* YFStock_TopBar.m */; };
 		23AFEF0A1EADDAAF00EA7ECC /* YFStock_TopBarCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEDA1EADDAAF00EA7ECC /* YFStock_TopBarCollectionViewCell.m */; };
 		23AFEF0B1EADDAAF00EA7ECC /* YFStock.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEEDC1EADDAAF00EA7ECC /* YFStock.m */; };
@@ -87,6 +81,8 @@
 /* Begin PBXFileReference section */
 		2327CAF61EC1BF4800AB00DE /* StockDetailFullScreenView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockDetailFullScreenView.h; sourceTree = "<group>"; };
 		2327CAF71EC1BF4800AB00DE /* StockDetailFullScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockDetailFullScreenView.m; sourceTree = "<group>"; };
+		2339F0161EC4682000320EDD /* YFStock_ScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_ScrollView.h; sourceTree = "<group>"; };
+		2339F0171EC4682000320EDD /* YFStock_ScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_ScrollView.m; sourceTree = "<group>"; };
 		23426DC01EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineAboveViewTableViewCell.h; sourceTree = "<group>"; };
 		23426DC11EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineAboveViewTableViewCell.m; sourceTree = "<group>"; };
 		23426DC31EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineBelowViewTableViewCell.h; sourceTree = "<group>"; };
@@ -157,34 +153,20 @@
 		23AFEEB11EADDAAF00EA7ECC /* UIView+Category.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Category.m"; sourceTree = "<group>"; };
 		23AFEEB21EADDAAF00EA7ECC /* YFStock_DataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_DataHandler.h; sourceTree = "<group>"; };
 		23AFEEB31EADDAAF00EA7ECC /* YFStock_DataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_DataHandler.m; sourceTree = "<group>"; };
-		23AFEEB61EADDAAF00EA7ECC /* YFKline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFKline.h; sourceTree = "<group>"; };
-		23AFEEB71EADDAAF00EA7ECC /* YFKline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFKline.m; sourceTree = "<group>"; };
-		23AFEEB81EADDAAF00EA7ECC /* YFMA_BOLLLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFMA_BOLLLine.h; sourceTree = "<group>"; };
-		23AFEEB91EADDAAF00EA7ECC /* YFMA_BOLLLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFMA_BOLLLine.m; sourceTree = "<group>"; };
 		23AFEEBA1EADDAAF00EA7ECC /* YFStock_KLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_KLine.h; sourceTree = "<group>"; };
 		23AFEEBB1EADDAAF00EA7ECC /* YFStock_KLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_KLine.m; sourceTree = "<group>"; };
-		23AFEEBC1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_KLineBottomLine.h; sourceTree = "<group>"; };
-		23AFEEBD1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_KLineBottomLine.m; sourceTree = "<group>"; };
-		23AFEEBE1EADDAAF00EA7ECC /* YFStock_KLineBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_KLineBottomView.h; sourceTree = "<group>"; };
-		23AFEEBF1EADDAAF00EA7ECC /* YFStock_KLineBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_KLineBottomView.m; sourceTree = "<group>"; };
 		23AFEEC01EADDAAF00EA7ECC /* YFStock_KLineMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_KLineMaskView.h; sourceTree = "<group>"; };
 		23AFEEC11EADDAAF00EA7ECC /* YFStock_KLineMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_KLineMaskView.m; sourceTree = "<group>"; };
-		23AFEEC21EADDAAF00EA7ECC /* YFStock_KLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_KLineView.h; sourceTree = "<group>"; };
-		23AFEEC31EADDAAF00EA7ECC /* YFStock_KLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_KLineView.m; sourceTree = "<group>"; };
 		23AFEEC51EADDAAF00EA7ECC /* YFStock_TopBarMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TopBarMaskView.h; sourceTree = "<group>"; };
 		23AFEEC61EADDAAF00EA7ECC /* YFStock_TopBarMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TopBarMaskView.m; sourceTree = "<group>"; };
 		23AFEEC71EADDAAF00EA7ECC /* YFStock_TopBarMaskViewCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TopBarMaskViewCollectionViewCell.h; sourceTree = "<group>"; };
 		23AFEEC81EADDAAF00EA7ECC /* YFStock_TopBarMaskViewCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TopBarMaskViewCollectionViewCell.m; sourceTree = "<group>"; };
-		23AFEECA1EADDAAF00EA7ECC /* YFStock_ScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_ScrollView.h; sourceTree = "<group>"; };
-		23AFEECB1EADDAAF00EA7ECC /* YFStock_ScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_ScrollView.m; sourceTree = "<group>"; };
 		23AFEECD1EADDAAF00EA7ECC /* YFStock_TimeLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TimeLine.h; sourceTree = "<group>"; };
 		23AFEECE1EADDAAF00EA7ECC /* YFStock_TimeLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TimeLine.m; sourceTree = "<group>"; };
 		23AFEECF1EADDAAF00EA7ECC /* YFStock_TimeLineMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TimeLineMaskView.h; sourceTree = "<group>"; };
 		23AFEED01EADDAAF00EA7ECC /* YFStock_TimeLineMaskView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TimeLineMaskView.m; sourceTree = "<group>"; };
 		23AFEED11EADDAAF00EA7ECC /* YFStock_TimeLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TimeLineView.h; sourceTree = "<group>"; };
 		23AFEED21EADDAAF00EA7ECC /* YFStock_TimeLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TimeLineView.m; sourceTree = "<group>"; };
-		23AFEED41EADDAAF00EA7ECC /* YFStock_TimeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TimeView.h; sourceTree = "<group>"; };
-		23AFEED51EADDAAF00EA7ECC /* YFStock_TimeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TimeView.m; sourceTree = "<group>"; };
 		23AFEED71EADDAAF00EA7ECC /* YFStock_TopBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TopBar.h; sourceTree = "<group>"; };
 		23AFEED81EADDAAF00EA7ECC /* YFStock_TopBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_TopBar.m; sourceTree = "<group>"; };
 		23AFEED91EADDAAF00EA7ECC /* YFStock_TopBarCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_TopBarCollectionViewCell.h; sourceTree = "<group>"; };
@@ -245,6 +227,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2339F0151EC4682000320EDD /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				2339F0161EC4682000320EDD /* YFStock_ScrollView.h */,
+				2339F0171EC4682000320EDD /* YFStock_ScrollView.m */,
+			);
+			path = ScrollView;
+			sourceTree = "<group>";
+		};
 		23426DB91EC0493B002A1FDB /* 2.0 */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,11 +468,10 @@
 		23AFEEB41EADDAAF00EA7ECC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2339F0151EC4682000320EDD /* ScrollView */,
 				23AFEEB51EADDAAF00EA7ECC /* KLine */,
 				23AFEEC41EADDAAF00EA7ECC /* MaskView */,
-				23AFEEC91EADDAAF00EA7ECC /* ScrollView */,
 				23AFEECC1EADDAAF00EA7ECC /* TimeLine */,
-				23AFEED31EADDAAF00EA7ECC /* TimeView */,
 				23AFEED61EADDAAF00EA7ECC /* TopBar */,
 			);
 			path = View;
@@ -491,20 +481,10 @@
 			isa = PBXGroup;
 			children = (
 				23426DB91EC0493B002A1FDB /* 2.0 */,
-				23AFEEB61EADDAAF00EA7ECC /* YFKline.h */,
-				23AFEEB71EADDAAF00EA7ECC /* YFKline.m */,
-				23AFEEB81EADDAAF00EA7ECC /* YFMA_BOLLLine.h */,
-				23AFEEB91EADDAAF00EA7ECC /* YFMA_BOLLLine.m */,
 				23AFEEBA1EADDAAF00EA7ECC /* YFStock_KLine.h */,
 				23AFEEBB1EADDAAF00EA7ECC /* YFStock_KLine.m */,
-				23AFEEBC1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.h */,
-				23AFEEBD1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.m */,
-				23AFEEBE1EADDAAF00EA7ECC /* YFStock_KLineBottomView.h */,
-				23AFEEBF1EADDAAF00EA7ECC /* YFStock_KLineBottomView.m */,
 				23AFEEC01EADDAAF00EA7ECC /* YFStock_KLineMaskView.h */,
 				23AFEEC11EADDAAF00EA7ECC /* YFStock_KLineMaskView.m */,
-				23AFEEC21EADDAAF00EA7ECC /* YFStock_KLineView.h */,
-				23AFEEC31EADDAAF00EA7ECC /* YFStock_KLineView.m */,
 			);
 			path = KLine;
 			sourceTree = "<group>";
@@ -520,15 +500,6 @@
 			path = MaskView;
 			sourceTree = "<group>";
 		};
-		23AFEEC91EADDAAF00EA7ECC /* ScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				23AFEECA1EADDAAF00EA7ECC /* YFStock_ScrollView.h */,
-				23AFEECB1EADDAAF00EA7ECC /* YFStock_ScrollView.m */,
-			);
-			path = ScrollView;
-			sourceTree = "<group>";
-		};
 		23AFEECC1EADDAAF00EA7ECC /* TimeLine */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,15 +511,6 @@
 				23AFEED21EADDAAF00EA7ECC /* YFStock_TimeLineView.m */,
 			);
 			path = TimeLine;
-			sourceTree = "<group>";
-		};
-		23AFEED31EADDAAF00EA7ECC /* TimeView */ = {
-			isa = PBXGroup;
-			children = (
-				23AFEED41EADDAAF00EA7ECC /* YFStock_TimeView.h */,
-				23AFEED51EADDAAF00EA7ECC /* YFStock_TimeView.m */,
-			);
-			path = TimeView;
 			sourceTree = "<group>";
 		};
 		23AFEED61EADDAAF00EA7ECC /* TopBar */ = {
@@ -714,10 +676,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23AFEF041EADDAAF00EA7ECC /* YFStock_ScrollView.m in Sources */,
 				23AFEE5F1EADDA8F00EA7ECC /* ViewController.m in Sources */,
-				23AFEEFF1EADDAAF00EA7ECC /* YFStock_KLineBottomView.m in Sources */,
-				23AFEEFE1EADDAAF00EA7ECC /* YFStock_KLineBottomLine.m in Sources */,
 				23AFEF411EADDAD300EA7ECC /* UIRefreshControl+AFNetworking.m in Sources */,
 				23AFEF401EADDAD300EA7ECC /* UIProgressView+AFNetworking.m in Sources */,
 				23AFEEF41EADDAAF00EA7ECC /* YYMemoryCache.m in Sources */,
@@ -748,10 +707,10 @@
 				23426DC21EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */,
 				23AFEF3D1EADDAD300EA7ECC /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				23AFEEEB1EADDAAF00EA7ECC /* NSString+MJExtension.m in Sources */,
-				23AFEF081EADDAAF00EA7ECC /* YFStock_TimeView.m in Sources */,
 				23AFEEE81EADDAAF00EA7ECC /* NSObject+MJCoding.m in Sources */,
 				23AFEF0B1EADDAAF00EA7ECC /* YFStock.m in Sources */,
 				23AFEEED1EADDAAF00EA7ECC /* NSJSONSerialization+YFJson.m in Sources */,
+				2339F0181EC4682000320EDD /* YFStock_ScrollView.m in Sources */,
 				23AFEEE01EADDAAF00EA7ECC /* StockDetailViewController.m in Sources */,
 				23426DC51EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */,
 				23AFEF3B1EADDAD300EA7ECC /* AFImageDownloader.m in Sources */,
@@ -769,12 +728,9 @@
 				23AFEEE51EADDAAF00EA7ECC /* MJPropertyKey.m in Sources */,
 				23AFEEE91EADDAAF00EA7ECC /* NSObject+MJKeyValue.m in Sources */,
 				23AFEEF91EADDAAF00EA7ECC /* UIView+Category.m in Sources */,
-				23AFEEFC1EADDAAF00EA7ECC /* YFMA_BOLLLine.m in Sources */,
 				23AFEF001EADDAAF00EA7ECC /* YFStock_KLineMaskView.m in Sources */,
 				23AFEEE71EADDAAF00EA7ECC /* NSObject+MJClass.m in Sources */,
 				23AFEE591EADDA8F00EA7ECC /* main.m in Sources */,
-				23AFEF011EADDAAF00EA7ECC /* YFStock_KLineView.m in Sources */,
-				23AFEEFB1EADDAAF00EA7ECC /* YFKline.m in Sources */,
 				23AFEF361EADDAD300EA7ECC /* AFURLResponseSerialization.m in Sources */,
 				23AFEEE31EADDAAF00EA7ECC /* MJFoundation.m in Sources */,
 				23AFEEF11EADDAAF00EA7ECC /* YYCache.m in Sources */,

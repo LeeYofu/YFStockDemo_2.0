@@ -565,14 +565,15 @@
             [self updateData];
             [self tableViewReloadData];
             
-            if (o2 < 0) {
-                
-                o2 = 0;
-            }
             if (o2 > self.aboveView.contentSize.height - self.aboveView.width) {
                 
                 o2 = self.aboveView.contentSize.height - self.aboveView.width;
             }
+            if (o2 < 0) {
+                
+                o2 = 0;
+            }
+            
             self.aboveView.contentOffset = CGPointMake(0, o2);
             self.belowView.contentOffset = self.aboveView.contentOffset;
         }

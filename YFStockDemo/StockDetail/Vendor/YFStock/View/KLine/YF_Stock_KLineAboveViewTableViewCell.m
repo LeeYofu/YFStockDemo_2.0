@@ -217,7 +217,7 @@
         topLineHeight = ABS(self.KLineModel.highPrice.floatValue - self.KLineModel.openPrice.floatValue) / KLineUnitValue;
         bottomLineHeight = ABS(self.KLineModel.lowPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
     }
-    
+        
     CGRect rect = CGRectMake(x, y, width, height);
     UIBezierPath *path = [UIBezierPath bezierPathWithRect:rect];
     

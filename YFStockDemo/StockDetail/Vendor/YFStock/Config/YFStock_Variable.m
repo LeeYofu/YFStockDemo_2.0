@@ -11,7 +11,7 @@
 
 static CGFloat YFStockKLineVolumeViewHeightRadio = 0.25; // KLine视图跟VolumeLine视图的屏占比
 static CGFloat YFStockKlineLineWidth = kStockKlineDefaultWidth; // 默认的K线线宽
-static CGFloat YFStockKlineLineCap = 2; // 默认的K线之间的间距
+static CGFloat YFStockKlineLineCap = 3; // 默认的K线之间的间距
 static NSInteger YFStockKlineRowCount = 2; // K线的分区数目/行数
 static BOOL YFStockIsFullScreen = NO; // 是否是全屏状态，默认为NO
 static NSInteger YFStockSelectedIndex = 0; // 选中的下标

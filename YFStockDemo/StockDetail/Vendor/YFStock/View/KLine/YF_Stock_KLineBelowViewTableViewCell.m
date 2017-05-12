@@ -32,10 +32,10 @@
     CAShapeLayer *layer = [CAShapeLayer layer];
     layer.frame = self.contentView.bounds;
     layer.fillColor = kClearColor.CGColor;
-    layer.lineWidth = 1.0f;
+    layer.lineWidth = 1.0;
     layer.lineJoin = kCALineJoinRound;
     layer.lineCap = kCALineCapRound;
-    [self.contentView.layer addSublayer:layer];
+    [self.layer addSublayer:layer];
     return layer;
 }
 
@@ -137,7 +137,7 @@
 }
 
 - (void)drawWithBottomBarIndex:(NSInteger)bottomBarIndex {
-    
+
     [self clearPath];
     
     switch (bottomBarIndex) {
@@ -485,11 +485,13 @@
         
         [bezierPath moveToPoint:CGPointMake(midX, midY)];
     }
-    [bezierPath addLineToPoint:CGPointMake(midX, midY)];
     
     if (self.nextKLineModel) {
         
         [bezierPath addLineToPoint:CGPointMake(rightX, rightY)];
+    } else {
+        
+        [bezierPath addLineToPoint:CGPointMake(midX, midY)];
     }
     
     return bezierPath;

@@ -57,7 +57,7 @@
     
     // top view
     UIView *topBgView = [UIView new];
-    topBgView.frame = CGRectMake(0, 0, kScreenWidth, 50);
+    topBgView.frame = CGRectMake(0, 0, kScreenWidth, 64);
     topBgView.backgroundColor = kCustomRGBColor(26, 181, 70, 1.0f);
     [self.view addSubview:topBgView];
     
@@ -173,13 +173,13 @@
         return self.timeLineDatas;
     } else if (index == YFStockTopBarIndex_DayK) { // day
         
-        return self.dayDatas;
+        return [[[[self.dayDatas arrayByAddingObjectsFromArray:self.dayDatas] arrayByAddingObjectsFromArray:self.dayDatas] arrayByAddingObjectsFromArray:self.dayDatas] arrayByAddingObjectsFromArray:self.dayDatas];
     } else if (index == YFStockTopBarIndex_WeekK) { // week
         
-        return self.weekDatas;
+        return [[[[self.weekDatas arrayByAddingObjectsFromArray:self.weekDatas] arrayByAddingObjectsFromArray:self.weekDatas] arrayByAddingObjectsFromArray:self.weekDatas] arrayByAddingObjectsFromArray:self.weekDatas];
     } else if (index == YFStockTopBarIndex_MonthK) { // month
         
-        return self.monthDatas;
+        return [[[[self.monthDatas arrayByAddingObjectsFromArray:self.monthDatas] arrayByAddingObjectsFromArray:self.monthDatas] arrayByAddingObjectsFromArray:self.monthDatas] arrayByAddingObjectsFromArray:self.monthDatas];
     } else { // other
         
         return @[];

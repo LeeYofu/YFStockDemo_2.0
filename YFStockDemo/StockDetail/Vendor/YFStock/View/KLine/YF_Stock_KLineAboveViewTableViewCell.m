@@ -50,11 +50,11 @@
     CAShapeLayer *layer = [CAShapeLayer layer];
     layer.frame = self.contentView.bounds;
     layer.fillColor = kClearColor.CGColor;
-    layer.lineWidth = 1.0f;
+    layer.lineWidth = 1.0;
     layer.lineJoin = kCALineJoinRound;
     layer.lineCap = kCALineCapRound;
     
-    [self.contentView.layer addSublayer:layer];
+    [self.layer addSublayer:layer];
     
     return layer;
 }
@@ -183,6 +183,14 @@
 }
 
 #pragma mark - draw
+- (void)clearPath {
+    
+    self.KLineShapeLayer.path = nil;
+    self.MA_1ShapeLayer.path = nil;
+    self.MA_2ShapeLayer.path = nil;
+    self.MA_3ShapeLayer.path = nil;
+    self.MA_4ShapeLayer.path = nil;
+}
 - (void)drawAllLine {
     
     [self drawKLine];
@@ -192,20 +200,19 @@
 - (void)drawKLine {
         
     CGFloat KLineUnitValue = [self getKLineUnitValue];
-    if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
     UIColor *strokeColor;
     CGFloat x, y, width, height;
     CGFloat topLineHeight, bottomLineHeight;
     
     y = [YFStock_Variable KLineGap] * 0.5;
     height = [YFStock_Variable KLineWidth];
-    
+    width = ABS(self.KLineModel.openPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
+
     if (self.KLineModel.isIncrease) {
         
         strokeColor = kStockIncreaseColor;
         
         x = [self getXWithValue:self.KLineModel.openPrice.floatValue];
-        width = ABS(self.KLineModel.openPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
         topLineHeight = ABS(self.KLineModel.highPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
         bottomLineHeight = ABS(self.KLineModel.lowPrice.floatValue - self.KLineModel.openPrice.floatValue) / KLineUnitValue;
     } else {
@@ -213,7 +220,6 @@
         strokeColor = kStockDecreaseColor;
         
         x = [self getXWithValue:self.KLineModel.closePrice.floatValue];
-        width = ABS(self.KLineModel.openPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
         topLineHeight = ABS(self.KLineModel.highPrice.floatValue - self.KLineModel.openPrice.floatValue) / KLineUnitValue;
         bottomLineHeight = ABS(self.KLineModel.lowPrice.floatValue - self.KLineModel.closePrice.floatValue) / KLineUnitValue;
     }
@@ -234,8 +240,6 @@
     [CATransaction commit];
     
     self.KLineShapeLayer.path = path.CGPath;
-    
-    
 }
 
 - (void)drawMALine {
@@ -292,18 +296,19 @@
         
         [bezierPath moveToPoint:CGPointMake(midX, midY)];
     }
-    [bezierPath addLineToPoint:CGPointMake(midX, midY)];
     
     if (self.nextKLineModel) {
         
         [bezierPath addLineToPoint:CGPointMake(rightX, rightY)];
+    } else {
+        
+        [bezierPath addLineToPoint:CGPointMake(midX, midY)];
     }
     
     return bezierPath;
 }
 
 - (void)drawMALineWithLayer:(CAShapeLayer *)layer bezierPath:(UIBezierPath *)bezierPath strokeColor:(UIColor *)strokeColor {
-    
     
     layer.strokeColor = strokeColor.CGColor;
     layer.path = bezierPath.CGPath;
@@ -324,7 +329,7 @@
 - (CGFloat)getKLineUnitValue {
     
     CGFloat KLineUnitValue = (self.visibleMax - self.visibleMin) / ([self getKLineMaxX] - [self getKLineMinX]);
-    
+    if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
     return KLineUnitValue;
 }
 

@@ -197,7 +197,7 @@
         return self.timeLineDatas;
     } else if (index == YFStockTopBarIndex_DayK) { // day
         
-        return self.dayDatas;
+        return [[self.dayDatas arrayByAddingObjectsFromArray:self.dayDatas] arrayByAddingObjectsFromArray:self.dayDatas];
     } else if (index == YFStockTopBarIndex_WeekK) { // week
         
         return self.weekDatas;

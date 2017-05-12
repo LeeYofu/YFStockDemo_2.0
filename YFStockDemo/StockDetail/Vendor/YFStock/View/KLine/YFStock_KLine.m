@@ -102,6 +102,7 @@
     [self addSubview:tableView];
     tableView.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
     tableView.frame = frame;
+//    tableView.bounces = NO;
     
     tableView.allowsSelection = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -30,9 +30,9 @@
 #define kStockKLineScaleBound 0.2 // 缩放K线的比例界限
 
 // K线的最大、最小宽度
-#define kStockKlineMinWidth 3
-#define kStockKlineMaxWidth 30
-#define kStockKlineDefaultWidth 5
+#define kStockKlineMinWidth 2.0
+#define kStockKlineMaxWidth 30.0
+#define kStockKlineDefaultWidth 5.0
 
 // K线的最大最小间距
 #define kStockKlineMinGap 1

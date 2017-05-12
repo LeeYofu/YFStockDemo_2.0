@@ -190,7 +190,7 @@
 }
 
 - (void)drawKLine {
-    
+        
     CGFloat KLineUnitValue = [self getKLineUnitValue];
     if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
     UIColor *strokeColor;
@@ -234,6 +234,7 @@
     [CATransaction commit];
     
     self.KLineShapeLayer.path = path.CGPath;
+    
     
 }
 
@@ -303,8 +304,10 @@
 
 - (void)drawMALineWithLayer:(CAShapeLayer *)layer bezierPath:(UIBezierPath *)bezierPath strokeColor:(UIColor *)strokeColor {
     
+    
     layer.strokeColor = strokeColor.CGColor;
     layer.path = bezierPath.CGPath;
+    
 }
 
 #pragma mark - 计算

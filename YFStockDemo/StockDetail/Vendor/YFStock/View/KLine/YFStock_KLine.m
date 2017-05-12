@@ -43,8 +43,6 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = kClearColor;
-        
         self.allKLineModels = allKLineModels;
         
         [self config];
@@ -55,6 +53,8 @@
 
 - (void)config {
     
+    self.backgroundColor = kWhiteColor;
+
     self.bottomBarIndex = 0;
     
     self.currentHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
@@ -89,7 +89,7 @@
     tableView.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
     tableView.frame = frame;
     
-    tableView.backgroundColor = kWhiteColor;
+    tableView.backgroundColor = kClearColor;
     tableView.allowsSelection = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.separatorColor = kClearColor;
@@ -322,6 +322,11 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+//    UITableViewCell *cell = [UITableViewCell new];
+//    cell.backgroundColor = kClearColor;
+//    cell.contentView.backgroundColor = kClearColor;
+//    return cell;
     
     if ([tableView isEqual:self.aboveView]) {
         

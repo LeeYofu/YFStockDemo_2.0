@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		2327CAF81EC1BF4800AB00DE /* StockDetailFullScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2327CAF71EC1BF4800AB00DE /* StockDetailFullScreenView.m */; };
 		2339F0181EC4682000320EDD /* YFStock_ScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2339F0171EC4682000320EDD /* YFStock_ScrollView.m */; };
-		23426DC21EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23426DC11EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m */; };
-		23426DC51EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23426DC41EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m */; };
 		23AFEE591EADDA8F00EA7ECC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEE581EADDA8F00EA7ECC /* main.m */; };
 		23AFEE5C1EADDA8F00EA7ECC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEE5B1EADDA8F00EA7ECC /* AppDelegate.m */; };
 		23AFEE5F1EADDA8F00EA7ECC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEE5E1EADDA8F00EA7ECC /* ViewController.m */; };
@@ -76,6 +74,8 @@
 		23AFEF451EADDAE100EA7ECC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AFEF441EADDAE100EA7ECC /* libsqlite3.tbd */; };
 		23AFEF481EADDDC200EA7ECC /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEF471EADDDC200EA7ECC /* CustomTabBarController.m */; };
 		23AFEF4B1EADE7DA00EA7ECC /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEF4A1EADE7DA00EA7ECC /* BaseViewController.m */; };
+		23CB46C01EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CB46BD1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m */; };
+		23CB46C11EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CB46BF1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,10 +83,6 @@
 		2327CAF71EC1BF4800AB00DE /* StockDetailFullScreenView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockDetailFullScreenView.m; sourceTree = "<group>"; };
 		2339F0161EC4682000320EDD /* YFStock_ScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YFStock_ScrollView.h; sourceTree = "<group>"; };
 		2339F0171EC4682000320EDD /* YFStock_ScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YFStock_ScrollView.m; sourceTree = "<group>"; };
-		23426DC01EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineAboveViewTableViewCell.h; sourceTree = "<group>"; };
-		23426DC11EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineAboveViewTableViewCell.m; sourceTree = "<group>"; };
-		23426DC31EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineBelowViewTableViewCell.h; sourceTree = "<group>"; };
-		23426DC41EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineBelowViewTableViewCell.m; sourceTree = "<group>"; };
 		23AFEE541EADDA8F00EA7ECC /* YFStockDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YFStockDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23AFEE581EADDA8F00EA7ECC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		23AFEE5A1EADDA8F00EA7ECC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -213,6 +209,10 @@
 		23AFEF471EADDDC200EA7ECC /* CustomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarController.m; sourceTree = "<group>"; };
 		23AFEF491EADE7DA00EA7ECC /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		23AFEF4A1EADE7DA00EA7ECC /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		23CB46BC1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineAboveViewTableViewCell.h; sourceTree = "<group>"; };
+		23CB46BD1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineAboveViewTableViewCell.m; sourceTree = "<group>"; };
+		23CB46BE1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineBelowViewTableViewCell.h; sourceTree = "<group>"; };
+		23CB46BF1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineBelowViewTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -234,17 +234,6 @@
 				2339F0171EC4682000320EDD /* YFStock_ScrollView.m */,
 			);
 			path = ScrollView;
-			sourceTree = "<group>";
-		};
-		23426DB91EC0493B002A1FDB /* 2.0 */ = {
-			isa = PBXGroup;
-			children = (
-				23426DC01EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.h */,
-				23426DC11EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m */,
-				23426DC31EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.h */,
-				23426DC41EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m */,
-			);
-			path = 2.0;
 			sourceTree = "<group>";
 		};
 		23AFEE4B1EADDA8E00EA7ECC = {
@@ -480,9 +469,12 @@
 		23AFEEB51EADDAAF00EA7ECC /* KLine */ = {
 			isa = PBXGroup;
 			children = (
-				23426DB91EC0493B002A1FDB /* 2.0 */,
 				23AFEEBA1EADDAAF00EA7ECC /* YFStock_KLine.h */,
 				23AFEEBB1EADDAAF00EA7ECC /* YFStock_KLine.m */,
+				23CB46BC1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.h */,
+				23CB46BD1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m */,
+				23CB46BE1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.h */,
+				23CB46BF1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m */,
 				23AFEEC01EADDAAF00EA7ECC /* YFStock_KLineMaskView.h */,
 				23AFEEC11EADDAAF00EA7ECC /* YFStock_KLineMaskView.m */,
 			);
@@ -676,6 +668,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23CB46C01EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */,
 				23AFEE5F1EADDA8F00EA7ECC /* ViewController.m in Sources */,
 				23AFEF411EADDAD300EA7ECC /* UIRefreshControl+AFNetworking.m in Sources */,
 				23AFEF401EADDAD300EA7ECC /* UIProgressView+AFNetworking.m in Sources */,
@@ -704,15 +697,14 @@
 				23AFEEEA1EADDAAF00EA7ECC /* NSObject+MJProperty.m in Sources */,
 				23AFEF421EADDAD300EA7ECC /* UIWebView+AFNetworking.m in Sources */,
 				23AFEF331EADDAD300EA7ECC /* AFNetworkReachabilityManager.m in Sources */,
-				23426DC21EC0506B002A1FDB /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */,
 				23AFEF3D1EADDAD300EA7ECC /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				23AFEEEB1EADDAAF00EA7ECC /* NSString+MJExtension.m in Sources */,
 				23AFEEE81EADDAAF00EA7ECC /* NSObject+MJCoding.m in Sources */,
+				23CB46C11EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */,
 				23AFEF0B1EADDAAF00EA7ECC /* YFStock.m in Sources */,
 				23AFEEED1EADDAAF00EA7ECC /* NSJSONSerialization+YFJson.m in Sources */,
 				2339F0181EC4682000320EDD /* YFStock_ScrollView.m in Sources */,
 				23AFEEE01EADDAAF00EA7ECC /* StockDetailViewController.m in Sources */,
-				23426DC51EC0507B002A1FDB /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */,
 				23AFEF3B1EADDAD300EA7ECC /* AFImageDownloader.m in Sources */,
 				23AFEEEE1EADDAAF00EA7ECC /* YFNetworkRequest.m in Sources */,
 				23AFEF321EADDAD300EA7ECC /* AFHTTPSessionManager.m in Sources */,

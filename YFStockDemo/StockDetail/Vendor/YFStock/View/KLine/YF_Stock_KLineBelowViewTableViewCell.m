@@ -30,7 +30,7 @@
 - (CAShapeLayer *)getMALayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.backgroundColor = kWhiteColor.CGColor;
+//    layer.backgroundColor = kWhiteColor.CGColor;
     layer.fillColor = kClearColor.CGColor;
     layer.lineWidth = 1.0f;
     layer.lineJoin = kCALineJoinRound;
@@ -94,7 +94,7 @@
     
     if (self) {
         
-        self.backgroundColor = kWhiteColor;
+        self.backgroundColor = kClearColor;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         

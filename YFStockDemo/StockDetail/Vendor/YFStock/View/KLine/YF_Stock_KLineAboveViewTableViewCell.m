@@ -38,7 +38,7 @@
     if (_KLineShapeLayer == nil) {
         
         _KLineShapeLayer = [CAShapeLayer layer];
-        _KLineShapeLayer.backgroundColor = kWhiteColor.CGColor;
+//        _KLineShapeLayer.backgroundColor = kWhiteColor.CGColor;
         _KLineShapeLayer.lineJoin = kCALineJoinRound;
         _KLineShapeLayer.lineCap = kCALineCapRound;
         [self.contentView.layer addSublayer:_KLineShapeLayer];
@@ -49,7 +49,7 @@
 - (CAShapeLayer *)getMALayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.backgroundColor = kWhiteColor.CGColor;
+//    layer.backgroundColor = kWhiteColor.CGColor;
     layer.fillColor = kClearColor.CGColor;
     layer.lineWidth = 1.0f;
     layer.lineJoin = kCALineJoinRound;
@@ -105,7 +105,7 @@
     
     if (self) {
         
-        self.backgroundColor = kWhiteColor;
+        self.backgroundColor = kClearColor;
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         

@@ -612,270 +612,270 @@
     
 }
 
-#pragma mark - 处理位置
-// 获取 K线 的以及 volume线 的坐标转换 macd kdj 等
-- (void)getPositionWithDrawKlineModelArray:(NSArray *)drawKLineModelArray pointStartX:(CGFloat)pointStartX KLineViewHeight:(CGFloat)KLineViewHeight volumeViewHeight:(CGFloat)volumeViewHeight bottomBarIndex:(YFStockBottomBarIndex)bottomBarIndex {
-    
-    
-    NSMutableArray *tempDrawKLineModels = [NSMutableArray new];
-    
-    // MinY MaxY
-    CGFloat KLineMinY = kStockKLineViewKlineMinY;
-    CGFloat KLineMaxY = KLineViewHeight - 1 * kStockKLineViewKlineMinY;
-    
-    CGFloat volumeLineMinY = kStockVolumeLineViewVolumeLineMinY;
-    CGFloat volumeLineMaxY = volumeViewHeight; // 到底部
-    
-    CGFloat bottomNormalMinY = kStockVolumeLineViewVolumeLineMinY;
-    CGFloat bottomNormalMaxY = volumeViewHeight - 2 * kStockVolumeLineViewVolumeLineMinY;
-    
-    // k line
-    CGFloat KLineUnitValue = (self.maxKLineValue - self.minKLineValue) / (KLineMaxY - KLineMinY);
-    if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
-    
-    // volume line
-    CGFloat volumeLineUnitValue = (self.maxVolumeLineValue - self.minVolumeLineValue) / (volumeLineMaxY - volumeLineMinY);
-    if (volumeLineUnitValue == 0) volumeLineUnitValue = 0.01f;
-    
-    // MACD line
-    CGFloat MACDLineUnitValue = (self.MACDMaxValue - self.MACDMinValue) / (bottomNormalMinY - bottomNormalMaxY);
-    if (MACDLineUnitValue == 0) MACDLineUnitValue = 0.01f;
-    
-    // KDJ line
-    CGFloat KDJLineUnitValue = (self.KDJMaxValue - self.KDJMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (KDJLineUnitValue == 0) KDJLineUnitValue = 0.01f;
-    
-    // RSI
-    CGFloat RSILineUnitValue = (self.RSIMaxValue - self.RSIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (RSILineUnitValue == 0) RSILineUnitValue = 0.01f;
-    
-    // ARBR
-    CGFloat ARBRLineUnitValue = (self.ARBRMaxValue - self.ARBRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (ARBRLineUnitValue == 0) ARBRLineUnitValue = 0.01f;
-    
-    // OBV
-    CGFloat OBVLineUnitValue = (self.OBVMaxValue - self.OBVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (OBVLineUnitValue == 0) OBVLineUnitValue = 0.01f;
-    
-    // WR
-    CGFloat WRLineUnitValue = (self.WRMaxValue - self.WRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (WRLineUnitValue == 0) WRLineUnitValue = 0.01f;
-    
-    // EMV
-    CGFloat EMVLineUnitValue = (self.EMVMaxValue - self.EMVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (EMVLineUnitValue == 0) EMVLineUnitValue = 0.01f;
-    
-    // DMA
-    CGFloat DMALineUnitValue = (self.DMAMaxValue - self.DMAMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (DMALineUnitValue == 0) DMALineUnitValue = 0.01f;
-    
-    // CCI
-    CGFloat CCILineUnitValue = (self.CCIMaxValue - self.CCIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (CCILineUnitValue == 0) CCILineUnitValue = 0.01f;
-    
-    // BIAS
-    CGFloat BIASLineUnitValue = (self.BIASMaxValue - self.BIASMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (BIASLineUnitValue == 0) BIASLineUnitValue = 0.01f;
-    
-    // ROC
-    CGFloat ROCLineUnitValue = (self.ROCMaxValue - self.ROCMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (ROCLineUnitValue == 0) ROCLineUnitValue = 0.01f;
-    
-    // MTM
-    CGFloat MTMLineUnitValue = (self.MTMMaxValue - self.MTMMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (MTMLineUnitValue == 0) MTMLineUnitValue = 0.01f;
-    
-    // CR
-    CGFloat CRLineUnitValue = (self.CRMaxValue - self.CRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (CRLineUnitValue == 0) CRLineUnitValue = 0.01f;
-    
-    // DMI
-    CGFloat DMILineUnitValue = (self.DMIMaxValue - self.DMIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (DMILineUnitValue == 0) DMILineUnitValue = 0.01f;
-    
-    // VR
-    CGFloat VRLineUnitValue = (self.VRMaxValue - self.VRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (VRLineUnitValue == 0) VRLineUnitValue = 0.01f;
-    
-    // TRIX
-    CGFloat TRIXLineUnitValue = (self.TRIXMaxValue - self.TRIXMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (TRIXLineUnitValue == 0) TRIXLineUnitValue = 0.01f;
-    
-    // PSY
-    CGFloat PSYLineUnitValue = (self.PSYMaxValue - self.PSYMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (PSYLineUnitValue == 0) PSYLineUnitValue = 0.01f;
-    
-    // DPO
-    CGFloat DPOLineUnitValue = (self.DPOMaxValue - self.DPOMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (DPOLineUnitValue == 0) DPOLineUnitValue = 0.01f;
-
-    // ASI
-    CGFloat ASILineUnitValue = (self.ASIMaxValue - self.ASIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
-    if (ASILineUnitValue == 0) ASILineUnitValue = 0.01f;
-    
-    // 便利
-    [drawKLineModelArray enumerateObjectsUsingBlock:^(YFStock_KLineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-        
-#pragma mark - K线
-        CGFloat xPosition = pointStartX + idx * ([YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap]);
-        
-        CGPoint highPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.highPrice.floatValue - self.minKLineValue) / KLineUnitValue));
-        CGPoint lowPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.lowPrice.floatValue - self.minKLineValue) / KLineUnitValue));
-        CGPoint openPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.openPrice.floatValue - self.minKLineValue) / KLineUnitValue));
-        CGFloat closePointY = ABS(KLineMaxY - (model.closePrice.floatValue - self.minKLineValue) / KLineUnitValue);
-        
-        //格式化openPoint和closePointY
-        if(ABS(closePointY - openPoint.y) < kStockKLineKlineMinThick) { // open 跟 close 的 y 非常相近
-            
-            if(openPoint.y > closePointY) { // 小者不变，大者更大
-                
-                openPoint.y = closePointY + kStockKLineKlineMinThick;
-                
-            } else if(openPoint.y < closePointY) {
-                
-                closePointY = openPoint.y + kStockKLineKlineMinThick;
-            } else { // openPointY == closePointY
-                
-                if(idx > 0) {
-
-                    if(model.openPrice > model.preModel.closePrice) {
-
-                        openPoint.y = closePointY + kStockKLineKlineMinThick;
-                    } else {
-
-                        closePointY = openPoint.y + kStockKLineKlineMinThick;
-                    }
-                } else if(idx + 1 < drawKLineModelArray.count) {
-                    
-                    // idx == 0 即第一个时
-//                    id<YYLineDataModelProtocol> subKLineModel = drawKLineModels[idx+1];
-//                    if(model.Close.floatValue < subKLineModel.Open.floatValue) {
-//                        openPoint.y = closePointY + YYStockLineMinThick;
+//#pragma mark - 处理位置
+//// 获取 K线 的以及 volume线 的坐标转换 macd kdj 等
+//- (void)getPositionWithDrawKlineModelArray:(NSArray *)drawKLineModelArray pointStartX:(CGFloat)pointStartX KLineViewHeight:(CGFloat)KLineViewHeight volumeViewHeight:(CGFloat)volumeViewHeight bottomBarIndex:(YFStockBottomBarIndex)bottomBarIndex {
+//    
+//    
+//    NSMutableArray *tempDrawKLineModels = [NSMutableArray new];
+//    
+//    // MinY MaxY
+//    CGFloat KLineMinY = kStockKLineViewKlineMinY;
+//    CGFloat KLineMaxY = KLineViewHeight - 1 * kStockKLineViewKlineMinY;
+//    
+//    CGFloat volumeLineMinY = kStockVolumeLineViewVolumeLineMinY;
+//    CGFloat volumeLineMaxY = volumeViewHeight; // 到底部
+//    
+//    CGFloat bottomNormalMinY = kStockVolumeLineViewVolumeLineMinY;
+//    CGFloat bottomNormalMaxY = volumeViewHeight - 2 * kStockVolumeLineViewVolumeLineMinY;
+//    
+//    // k line
+//    CGFloat KLineUnitValue = (self.maxKLineValue - self.minKLineValue) / (KLineMaxY - KLineMinY);
+//    if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
+//    
+//    // volume line
+//    CGFloat volumeLineUnitValue = (self.maxVolumeLineValue - self.minVolumeLineValue) / (volumeLineMaxY - volumeLineMinY);
+//    if (volumeLineUnitValue == 0) volumeLineUnitValue = 0.01f;
+//    
+//    // MACD line
+//    CGFloat MACDLineUnitValue = (self.MACDMaxValue - self.MACDMinValue) / (bottomNormalMinY - bottomNormalMaxY);
+//    if (MACDLineUnitValue == 0) MACDLineUnitValue = 0.01f;
+//    
+//    // KDJ line
+//    CGFloat KDJLineUnitValue = (self.KDJMaxValue - self.KDJMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (KDJLineUnitValue == 0) KDJLineUnitValue = 0.01f;
+//    
+//    // RSI
+//    CGFloat RSILineUnitValue = (self.RSIMaxValue - self.RSIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (RSILineUnitValue == 0) RSILineUnitValue = 0.01f;
+//    
+//    // ARBR
+//    CGFloat ARBRLineUnitValue = (self.ARBRMaxValue - self.ARBRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (ARBRLineUnitValue == 0) ARBRLineUnitValue = 0.01f;
+//    
+//    // OBV
+//    CGFloat OBVLineUnitValue = (self.OBVMaxValue - self.OBVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (OBVLineUnitValue == 0) OBVLineUnitValue = 0.01f;
+//    
+//    // WR
+//    CGFloat WRLineUnitValue = (self.WRMaxValue - self.WRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (WRLineUnitValue == 0) WRLineUnitValue = 0.01f;
+//    
+//    // EMV
+//    CGFloat EMVLineUnitValue = (self.EMVMaxValue - self.EMVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (EMVLineUnitValue == 0) EMVLineUnitValue = 0.01f;
+//    
+//    // DMA
+//    CGFloat DMALineUnitValue = (self.DMAMaxValue - self.DMAMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (DMALineUnitValue == 0) DMALineUnitValue = 0.01f;
+//    
+//    // CCI
+//    CGFloat CCILineUnitValue = (self.CCIMaxValue - self.CCIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (CCILineUnitValue == 0) CCILineUnitValue = 0.01f;
+//    
+//    // BIAS
+//    CGFloat BIASLineUnitValue = (self.BIASMaxValue - self.BIASMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (BIASLineUnitValue == 0) BIASLineUnitValue = 0.01f;
+//    
+//    // ROC
+//    CGFloat ROCLineUnitValue = (self.ROCMaxValue - self.ROCMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (ROCLineUnitValue == 0) ROCLineUnitValue = 0.01f;
+//    
+//    // MTM
+//    CGFloat MTMLineUnitValue = (self.MTMMaxValue - self.MTMMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (MTMLineUnitValue == 0) MTMLineUnitValue = 0.01f;
+//    
+//    // CR
+//    CGFloat CRLineUnitValue = (self.CRMaxValue - self.CRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (CRLineUnitValue == 0) CRLineUnitValue = 0.01f;
+//    
+//    // DMI
+//    CGFloat DMILineUnitValue = (self.DMIMaxValue - self.DMIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (DMILineUnitValue == 0) DMILineUnitValue = 0.01f;
+//    
+//    // VR
+//    CGFloat VRLineUnitValue = (self.VRMaxValue - self.VRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (VRLineUnitValue == 0) VRLineUnitValue = 0.01f;
+//    
+//    // TRIX
+//    CGFloat TRIXLineUnitValue = (self.TRIXMaxValue - self.TRIXMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (TRIXLineUnitValue == 0) TRIXLineUnitValue = 0.01f;
+//    
+//    // PSY
+//    CGFloat PSYLineUnitValue = (self.PSYMaxValue - self.PSYMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (PSYLineUnitValue == 0) PSYLineUnitValue = 0.01f;
+//    
+//    // DPO
+//    CGFloat DPOLineUnitValue = (self.DPOMaxValue - self.DPOMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (DPOLineUnitValue == 0) DPOLineUnitValue = 0.01f;
+//
+//    // ASI
+//    CGFloat ASILineUnitValue = (self.ASIMaxValue - self.ASIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
+//    if (ASILineUnitValue == 0) ASILineUnitValue = 0.01f;
+//    
+//    // 便利
+//    [drawKLineModelArray enumerateObjectsUsingBlock:^(YFStock_KLineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
+//        
+//#pragma mark - K线
+//        CGFloat xPosition = pointStartX + idx * ([YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap]);
+//        
+//        CGPoint highPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.highPrice.floatValue - self.minKLineValue) / KLineUnitValue));
+//        CGPoint lowPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.lowPrice.floatValue - self.minKLineValue) / KLineUnitValue));
+//        CGPoint openPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.openPrice.floatValue - self.minKLineValue) / KLineUnitValue));
+//        CGFloat closePointY = ABS(KLineMaxY - (model.closePrice.floatValue - self.minKLineValue) / KLineUnitValue);
+//        
+//        //格式化openPoint和closePointY
+//        if(ABS(closePointY - openPoint.y) < kStockKLineKlineMinThick) { // open 跟 close 的 y 非常相近
+//            
+//            if(openPoint.y > closePointY) { // 小者不变，大者更大
+//                
+//                openPoint.y = closePointY + kStockKLineKlineMinThick;
+//                
+//            } else if(openPoint.y < closePointY) {
+//                
+//                closePointY = openPoint.y + kStockKLineKlineMinThick;
+//            } else { // openPointY == closePointY
+//                
+//                if(idx > 0) {
+//
+//                    if(model.openPrice > model.preModel.closePrice) {
+//
+//                        openPoint.y = closePointY + kStockKLineKlineMinThick;
 //                    } else {
+//
 //                        closePointY = openPoint.y + kStockKLineKlineMinThick;
 //                    }
-                } else {
-                    
-                    openPoint.y = closePointY - kStockKLineKlineMinThick;
-                }
-            }
-        }
-        
-        CGPoint closePoint = CGPointMake(xPosition, closePointY);
-        
-        model.openPricePositionPoint = openPoint;
-        model.closePricePositionPoint = closePoint;
-        model.highPricePositionPoint = highPoint;
-        model.lowPricePositionPoint = lowPoint;
-        
-#pragma mark - volume线
-        CGFloat yPosition = ABS(volumeLineMaxY - (model.volume.integerValue - self.minVolumeLineValue) / volumeLineUnitValue); // start 的 y
-        CGPoint startPoint = CGPointMake(xPosition, (ABS(yPosition - volumeLineMaxY) > 0 && ABS(yPosition - volumeLineMaxY) < 0.5) ? volumeLineMaxY - 0.5 : yPosition);
-        CGPoint endPoint = CGPointMake(xPosition, volumeLineMaxY);
-
-        model.volumeStartPositionPoint = startPoint; // 上↑
-        model.volumeEndPositionPoint = endPoint; // 下↓
-        
-#pragma mark - MA线
-        model.MA_5PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_5.floatValue - self.minKLineValue) / KLineUnitValue));
-        model.MA_10PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_10.floatValue - self.minKLineValue) / KLineUnitValue));
-        model.MA_20PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_20.floatValue - self.minKLineValue) / KLineUnitValue));
-        model.MA_30PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_30.floatValue - self.minKLineValue) / KLineUnitValue));
-
-#pragma mark - MACD
-        model.MACD_DIFPositionPoint = CGPointMake(xPosition, model.MACD_DIF.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
-        model.MACD_DEAPositionPoint = CGPointMake(xPosition, model.MACD_DEA.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
-        model.MACD_BARStartPositionPoint = CGPointMake(xPosition, volumeViewHeight * 0.5);
-        model.MACD_BAREndPositionPoint = CGPointMake(xPosition, model.MACD_BAR.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
-        
-#pragma mark - KDJ
-        model.KDJ_KPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_K.floatValue - self.KDJMinValue) / KDJLineUnitValue);
-        model.KDJ_DPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_D.floatValue - self.KDJMinValue) / KDJLineUnitValue);
-        model.KDJ_JPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_J.floatValue - self.KDJMinValue) / KDJLineUnitValue);
-        
-#pragma mark - RSI
-        model.RSI_6PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_6.floatValue - self.RSIMinValue) / RSILineUnitValue));
-        model.RSI_12PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_12.floatValue - self.RSIMinValue) / RSILineUnitValue));
-        model.RSI_24PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_24.floatValue - self.RSIMinValue) / RSILineUnitValue));
-        
-#pragma mark - BOLL
-        model.BOLL_UpperPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_UPPER.floatValue - self.minKLineValue) / KLineUnitValue));
-        model.BOLL_MidPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_MID.floatValue - self.minKLineValue) / KLineUnitValue));
-        model.BOLL_LowerPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_LOWER.floatValue - self.minKLineValue) / KLineUnitValue));
-        
-#pragma mark - ARBR
-        model.ARBR_ARPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_AR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
-        model.ARBR_BRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_BR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
-        
-#pragma mark - OBV
-        model.OBVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.OBV.floatValue - self.OBVMinValue) / OBVLineUnitValue));
-
-#pragma mark - WR
-        model.WR_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_1.floatValue - self.WRMinValue) / WRLineUnitValue));
-        model.WR_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_2.floatValue - self.WRMinValue) / WRLineUnitValue));
-        
-#pragma mark - EMV
-        model.EMVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV.floatValue - self.EMVMinValue) / EMVLineUnitValue));
-        model.EMV_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV_MA.floatValue - self.EMVMinValue) / EMVLineUnitValue));
-
-#pragma mark - DMA
-        model.DDDPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DDD.floatValue - self.DMAMinValue) / DMALineUnitValue));
-        model.AMAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.AMA.floatValue - self.DMAMinValue) / DMALineUnitValue));
-
-#pragma mark - CCI
-        model.CCIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CCI.floatValue - self.CCIMinValue) / CCILineUnitValue));
-        
-#pragma mark - BIAS
-        model.BIAS_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_1.floatValue - self.BIASMinValue) / BIASLineUnitValue));
-        model.BIAS_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_2.floatValue - self.BIASMinValue) / BIASLineUnitValue));
-        model.BIAS_3PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_3.floatValue - self.BIASMinValue) / BIASLineUnitValue));
-
-#pragma mark - ROC
-        model.ROCPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC.floatValue - self.ROCMinValue) / ROCLineUnitValue));
-        model.ROC_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC_MA.floatValue - self.ROCMinValue) / ROCLineUnitValue));
-        
-#pragma mark - MTM
-        model.MTMPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM.floatValue - self.MTMMinValue) / MTMLineUnitValue));
-        model.MTM_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM_MA.floatValue - self.MTMMinValue) / MTMLineUnitValue));
-
-#pragma mark - CR
-        model.CRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR.floatValue - self.CRMinValue) / CRLineUnitValue));
-        model.CR_MA_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR_MA_1.floatValue - self.CRMinValue) / CRLineUnitValue));
-        model.CR_MA_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR_MA_2.floatValue - self.CRMinValue) / CRLineUnitValue));
-
-#pragma mark - DMI
-        model.DMI_PDIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_PDI.floatValue - self.DMIMinValue) / DMILineUnitValue));
-        model.DMI_MDIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_MDI.floatValue - self.DMIMinValue) / DMILineUnitValue));
-        model.DMI_ADXPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADX.floatValue - self.DMIMinValue) / DMILineUnitValue));
-        model.DMI_ADXRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADXR.floatValue - self.DMIMinValue) / DMILineUnitValue));
-        
-#pragma mark - VR
-        model.VRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR.floatValue - self.VRMinValue) / VRLineUnitValue));
-        model.VR_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR_MA.floatValue - self.VRMinValue) / VRLineUnitValue));
-
-
-#pragma mark - TRIX
-        model.TRIXPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.TRIX.floatValue - self.TRIXMinValue) / TRIXLineUnitValue));
-        model.TRIX_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.TRIX_MA.floatValue - self.TRIXMinValue) / TRIXLineUnitValue));
-
-#pragma mark - PSY
-        model.PSYPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.PSY.floatValue - self.PSYMinValue) / PSYLineUnitValue));
-        model.PSY_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.PSY_MA.floatValue - self.PSYMinValue) / PSYLineUnitValue));
-
-#pragma mark - DPO
-        model.DPOPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO.floatValue - self.DPOMinValue) / DPOLineUnitValue));
-        model.DPO_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO_MA.floatValue - self.DPOMinValue) / DPOLineUnitValue));
-        
-#pragma mark - ASI
-        model.ASIPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI.floatValue - self.ASIMinValue) / ASILineUnitValue));
-        model.ASI_MAPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI_MA.floatValue - self.ASIMinValue) / ASILineUnitValue));
-
-        
-        [tempDrawKLineModels addObject:model];
-    }];
-    
-    self.drawKLineModels = tempDrawKLineModels;
-}
+//                } else if(idx + 1 < drawKLineModelArray.count) {
+//                    
+//                    // idx == 0 即第一个时
+////                    id<YYLineDataModelProtocol> subKLineModel = drawKLineModels[idx+1];
+////                    if(model.Close.floatValue < subKLineModel.Open.floatValue) {
+////                        openPoint.y = closePointY + YYStockLineMinThick;
+////                    } else {
+////                        closePointY = openPoint.y + kStockKLineKlineMinThick;
+////                    }
+//                } else {
+//                    
+//                    openPoint.y = closePointY - kStockKLineKlineMinThick;
+//                }
+//            }
+//        }
+//        
+//        CGPoint closePoint = CGPointMake(xPosition, closePointY);
+//        
+//        model.openPricePositionPoint = openPoint;
+//        model.closePricePositionPoint = closePoint;
+//        model.highPricePositionPoint = highPoint;
+//        model.lowPricePositionPoint = lowPoint;
+//        
+//#pragma mark - volume线
+//        CGFloat yPosition = ABS(volumeLineMaxY - (model.volume.integerValue - self.minVolumeLineValue) / volumeLineUnitValue); // start 的 y
+//        CGPoint startPoint = CGPointMake(xPosition, (ABS(yPosition - volumeLineMaxY) > 0 && ABS(yPosition - volumeLineMaxY) < 0.5) ? volumeLineMaxY - 0.5 : yPosition);
+//        CGPoint endPoint = CGPointMake(xPosition, volumeLineMaxY);
+//
+//        model.volumeStartPositionPoint = startPoint; // 上↑
+//        model.volumeEndPositionPoint = endPoint; // 下↓
+//        
+//#pragma mark - MA线
+//        model.MA_5PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_5.floatValue - self.minKLineValue) / KLineUnitValue));
+//        model.MA_10PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_10.floatValue - self.minKLineValue) / KLineUnitValue));
+//        model.MA_20PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_20.floatValue - self.minKLineValue) / KLineUnitValue));
+//        model.MA_30PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_30.floatValue - self.minKLineValue) / KLineUnitValue));
+//
+//#pragma mark - MACD
+//        model.MACD_DIFPositionPoint = CGPointMake(xPosition, model.MACD_DIF.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
+//        model.MACD_DEAPositionPoint = CGPointMake(xPosition, model.MACD_DEA.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
+//        model.MACD_BARStartPositionPoint = CGPointMake(xPosition, volumeViewHeight * 0.5);
+//        model.MACD_BAREndPositionPoint = CGPointMake(xPosition, model.MACD_BAR.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
+//        
+//#pragma mark - KDJ
+//        model.KDJ_KPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_K.floatValue - self.KDJMinValue) / KDJLineUnitValue);
+//        model.KDJ_DPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_D.floatValue - self.KDJMinValue) / KDJLineUnitValue);
+//        model.KDJ_JPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_J.floatValue - self.KDJMinValue) / KDJLineUnitValue);
+//        
+//#pragma mark - RSI
+//        model.RSI_6PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_6.floatValue - self.RSIMinValue) / RSILineUnitValue));
+//        model.RSI_12PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_12.floatValue - self.RSIMinValue) / RSILineUnitValue));
+//        model.RSI_24PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_24.floatValue - self.RSIMinValue) / RSILineUnitValue));
+//        
+//#pragma mark - BOLL
+//        model.BOLL_UpperPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_UPPER.floatValue - self.minKLineValue) / KLineUnitValue));
+//        model.BOLL_MidPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_MID.floatValue - self.minKLineValue) / KLineUnitValue));
+//        model.BOLL_LowerPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_LOWER.floatValue - self.minKLineValue) / KLineUnitValue));
+//        
+//#pragma mark - ARBR
+//        model.ARBR_ARPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_AR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
+//        model.ARBR_BRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_BR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
+//        
+//#pragma mark - OBV
+//        model.OBVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.OBV.floatValue - self.OBVMinValue) / OBVLineUnitValue));
+//
+//#pragma mark - WR
+//        model.WR_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_1.floatValue - self.WRMinValue) / WRLineUnitValue));
+//        model.WR_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_2.floatValue - self.WRMinValue) / WRLineUnitValue));
+//        
+//#pragma mark - EMV
+//        model.EMVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV.floatValue - self.EMVMinValue) / EMVLineUnitValue));
+//        model.EMV_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV_MA.floatValue - self.EMVMinValue) / EMVLineUnitValue));
+//
+//#pragma mark - DMA
+//        model.DDDPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DDD.floatValue - self.DMAMinValue) / DMALineUnitValue));
+//        model.AMAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.AMA.floatValue - self.DMAMinValue) / DMALineUnitValue));
+//
+//#pragma mark - CCI
+//        model.CCIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CCI.floatValue - self.CCIMinValue) / CCILineUnitValue));
+//        
+//#pragma mark - BIAS
+//        model.BIAS_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_1.floatValue - self.BIASMinValue) / BIASLineUnitValue));
+//        model.BIAS_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_2.floatValue - self.BIASMinValue) / BIASLineUnitValue));
+//        model.BIAS_3PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_3.floatValue - self.BIASMinValue) / BIASLineUnitValue));
+//
+//#pragma mark - ROC
+//        model.ROCPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC.floatValue - self.ROCMinValue) / ROCLineUnitValue));
+//        model.ROC_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC_MA.floatValue - self.ROCMinValue) / ROCLineUnitValue));
+//        
+//#pragma mark - MTM
+//        model.MTMPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM.floatValue - self.MTMMinValue) / MTMLineUnitValue));
+//        model.MTM_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM_MA.floatValue - self.MTMMinValue) / MTMLineUnitValue));
+//
+//#pragma mark - CR
+//        model.CRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR.floatValue - self.CRMinValue) / CRLineUnitValue));
+//        model.CR_MA_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR_MA_1.floatValue - self.CRMinValue) / CRLineUnitValue));
+//        model.CR_MA_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CR_MA_2.floatValue - self.CRMinValue) / CRLineUnitValue));
+//
+//#pragma mark - DMI
+//        model.DMI_PDIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_PDI.floatValue - self.DMIMinValue) / DMILineUnitValue));
+//        model.DMI_MDIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_MDI.floatValue - self.DMIMinValue) / DMILineUnitValue));
+//        model.DMI_ADXPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADX.floatValue - self.DMIMinValue) / DMILineUnitValue));
+//        model.DMI_ADXRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADXR.floatValue - self.DMIMinValue) / DMILineUnitValue));
+//        
+//#pragma mark - VR
+//        model.VRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR.floatValue - self.VRMinValue) / VRLineUnitValue));
+//        model.VR_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR_MA.floatValue - self.VRMinValue) / VRLineUnitValue));
+//
+//
+//#pragma mark - TRIX
+//        model.TRIXPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.TRIX.floatValue - self.TRIXMinValue) / TRIXLineUnitValue));
+//        model.TRIX_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.TRIX_MA.floatValue - self.TRIXMinValue) / TRIXLineUnitValue));
+//
+//#pragma mark - PSY
+//        model.PSYPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.PSY.floatValue - self.PSYMinValue) / PSYLineUnitValue));
+//        model.PSY_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.PSY_MA.floatValue - self.PSYMinValue) / PSYLineUnitValue));
+//
+//#pragma mark - DPO
+//        model.DPOPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO.floatValue - self.DPOMinValue) / DPOLineUnitValue));
+//        model.DPO_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO_MA.floatValue - self.DPOMinValue) / DPOLineUnitValue));
+//        
+//#pragma mark - ASI
+//        model.ASIPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI.floatValue - self.ASIMinValue) / ASILineUnitValue));
+//        model.ASI_MAPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI_MA.floatValue - self.ASIMinValue) / ASILineUnitValue));
+//
+//        
+//        [tempDrawKLineModels addObject:model];
+//    }];
+//    
+//    self.drawKLineModels = tempDrawKLineModels;
+//}
 
 #pragma mark - lazy loading
 - (NSArray<YFStock_KLineModel *> *)drawKLineModels {

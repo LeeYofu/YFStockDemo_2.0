@@ -135,11 +135,11 @@
 
 - (void)clearPath {
     
+    self.barLayer.path = nil;
     self.layer1.path = nil;
     self.layer2.path = nil;
     self.layer3.path = nil;
     self.layer4.path = nil;
-    self.barLayer.path = nil;
 }
 
 - (void)drawWithBottomBarIndex:(NSInteger)bottomBarIndex {

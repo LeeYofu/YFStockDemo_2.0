@@ -51,7 +51,7 @@
 
 #define kStockShadowLineWidth 1.0 // 竖线线宽
 
-#define kStockPartLineHeight 0.8 // 分割线高度 (1 / [UIScreen mainScreen].scale)
+#define kStockPartLineHeight (1 / [UIScreen mainScreen].scale) // 分割线高度 (1 / [UIScreen mainScreen].scale)
 
 #define kStockVolumeLineViewVolumeLineMinY 10 // volumeLine距离顶部的最小高度
 
@@ -84,7 +84,7 @@
 #define kStockDEALineColor kCustomRGBColor(236, 50, 248, 1.0)
 
 
-#define kStockKlinePartLineColor kCustomRGBColor(240, 242, 246, 1.0) // K线分割线颜色
+#define kStockKlinePartLineColor kCustomRGBColor(235, 237, 241, 1.0) // K线分割线颜色
 
 // 顶部工具条正常字体颜色跟选中字体颜色
 #define kStockTopBarNormalFontColor kCustomRGBColor(22, 22, 22, 0.7f)

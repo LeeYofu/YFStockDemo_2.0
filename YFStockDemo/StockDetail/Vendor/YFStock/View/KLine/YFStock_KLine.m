@@ -168,31 +168,31 @@
 
 - (void)createBoardLine {
     
-    UIColor *boardLineColor = kCustomRGBColor(203, 205, 212, 1.0);
+    UIColor *boardLineColor = kCustomRGBColor(218, 220, 227, 1.0);
     
     // 顶部
     UIView *backgroundLine1 = [UIView new];
     backgroundLine1.backgroundColor = boardLineColor;
     backgroundLine1.frame = CGRectMake(self.aboveView.x, 0, self.aboveView.width, kStockPartLineHeight);
-    [self insertSubview:backgroundLine1 belowSubview:self.aboveView];
+    [self addSubview:backgroundLine1];
     
     // 中间上
     UIView *backgroundLine2 = [UIView new];
     backgroundLine2.backgroundColor = boardLineColor;
     backgroundLine2.frame = CGRectMake(self.aboveView.x, self.aboveView.maxY + kStockKLineAboveViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
-    [self insertSubview:backgroundLine2 belowSubview:self.aboveView];
+    [self addSubview:backgroundLine2];
     
     // 中间下
     UIView *backgroundLine3 = [UIView new];
     backgroundLine3.backgroundColor = boardLineColor;
     backgroundLine3.frame = CGRectMake(self.aboveView.x, self.belowView.y - kStockKLineBelowViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
-    [self insertSubview:backgroundLine3 belowSubview:self.aboveView];
+    [self addSubview:backgroundLine3];
     
     // 底部
     UIView *backgroundLine4 = [UIView new];
     backgroundLine4.backgroundColor = boardLineColor;
     backgroundLine4.frame = CGRectMake(self.aboveView.x, self.belowView.maxY + kStockKLineBelowViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
-    [self insertSubview:backgroundLine4 belowSubview:self.aboveView];
+    [self addSubview:backgroundLine4];
 }
 
 #pragma mark - tableView代理方法

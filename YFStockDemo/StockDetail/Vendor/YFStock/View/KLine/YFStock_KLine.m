@@ -60,6 +60,11 @@
     
     self.currentHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
     self.lastHeight = self.currentHeight;
+    
+    // 长按手势
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
+    longPress.minimumPressDuration = 0.2f;
+    [self addGestureRecognizer:longPress];
 }
 
 #pragma mark - 布局子视图
@@ -98,18 +103,11 @@
     tableView.showsVerticalScrollIndicator = NO;
 //    tableView.decelerationRate = 0.9;
     tableView.clipsToBounds = NO;
-//    tableView.layer.borderColor = kStockKlinePartLineColor.CGColor;
-//    tableView.layer.borderWidth = 0.5f;
     
     // 缩放
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchAction:)];
     pinch.delegate = self;
     [tableView addGestureRecognizer:pinch];
-    
-    // 长按手势
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
-    longPress.minimumPressDuration = 0.2f;
-    [tableView addGestureRecognizer:longPress];
 
     return tableView;
 }
@@ -559,12 +557,17 @@
 - (void)event_longPressAction:(UILongPressGestureRecognizer *)longPress {
     
     CGPoint p = [longPress locationInView:longPress.view];
+    p = [self convertPoint:p toView:self.aboveView];
     
-    NSIndexPath *indexPath = [(UITableView *)longPress.view indexPathForRowAtPoint:p]; // 获取响应的长按的indexpath
+    // 针对年K的特殊处理
+    if (p.y > self.aboveView.contentSize.height - self.currentHeight * 0.5) {
+        
+        p.y = self.aboveView.contentSize.height - self.currentHeight * 0.5;
+    }
+
+    NSIndexPath *indexPath = [self.aboveView indexPathForRowAtPoint:CGPointMake(0, p.y)]; // 获取响应的长按的indexpath
     
     YFStock_KLineModel *selectedModel = self.allKLineModels[indexPath.row];
-    
-//    NSLog(@"%@", selectedModel.dataTime);
     
     CGFloat x, y, price;
     x = indexPath.row * self.currentHeight + 0.5 * self.currentHeight;
@@ -575,13 +578,12 @@
     CGFloat unitValue = (self.aboveMax - self.aboveMin) / self.aboveView.height;
     y = self.aboveView.height - (price - self.aboveMin) / unitValue;
     
-    NSLog(@"%f - %f", x, y);
+//    NSLog(@"%f - %f, %ld", x, y, indexPath.row);
     
     // 显示十字线-重置十字线frame等
     self.maskView.hidden = NO;
     self.maskView.selectedKLineModel = selectedModel;
     [self.maskView resetLineFrameWithPoint:CGPointMake(x, y)];
-    
     
     // 结束、取消等状态
     if(longPress.state == UIGestureRecognizerStateEnded || longPress.state == UIGestureRecognizerStateCancelled || longPress.state == UIGestureRecognizerStateFailed) {

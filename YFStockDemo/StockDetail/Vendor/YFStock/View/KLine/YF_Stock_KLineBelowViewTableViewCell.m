@@ -27,7 +27,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (CAShapeLayer *)getMALayer {
+- (CAShapeLayer *)getLineLayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
 //    layer.backgroundColor = kWhiteColor.CGColor;
@@ -42,7 +42,7 @@
     
     if (_layer1 == nil) {
         
-        _layer1 = [self getMALayer];
+        _layer1 = [self getLineLayer];
         [self.contentView.layer addSublayer:_layer1];
     }
     return _layer1;
@@ -52,7 +52,7 @@
     
     if (_layer2 == nil) {
         
-        _layer2 = [self getMALayer];
+        _layer2 = [self getLineLayer];
         [self.contentView.layer addSublayer:_layer2];
     }
     return _layer2;
@@ -62,7 +62,7 @@
     
     if (_layer3 == nil) {
         
-        _layer3 = [self getMALayer];
+        _layer3 = [self getLineLayer];
         [self.contentView.layer addSublayer:_layer3];
     }
     return _layer3;
@@ -72,7 +72,7 @@
     
     if (_layer4 == nil) {
         
-        _layer4 = [self getMALayer];
+        _layer4 = [self getLineLayer];
         [self.contentView.layer addSublayer:_layer4];
     }
     return _layer4;
@@ -82,7 +82,7 @@
     
     if (_barLayer == nil) {
         
-        _barLayer = [self getMALayer];
+        _barLayer = [self getLineLayer];
         [self.contentView.layer addSublayer:_barLayer];
     }
     return _barLayer;

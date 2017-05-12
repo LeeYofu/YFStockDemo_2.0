@@ -46,7 +46,7 @@
     return _KLineShapeLayer;
 }
 
-- (CAShapeLayer *)getMALayer {
+- (CAShapeLayer *)getLineLayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
 //    layer.backgroundColor = kWhiteColor.CGColor;
@@ -62,7 +62,7 @@
     
     if (_MA_1ShapeLayer == nil) {
         
-        _MA_1ShapeLayer = [self getMALayer];
+        _MA_1ShapeLayer = [self getLineLayer];
         [self.contentView.layer addSublayer:_MA_1ShapeLayer];
     }
     return _MA_1ShapeLayer;
@@ -72,7 +72,7 @@
     
     if (_MA_2ShapeLayer == nil) {
         
-        _MA_2ShapeLayer = [self getMALayer];
+        _MA_2ShapeLayer = [self getLineLayer];
         [self.contentView.layer addSublayer:_MA_2ShapeLayer];
     }
     return _MA_2ShapeLayer;
@@ -82,7 +82,7 @@
     
     if (_MA_3ShapeLayer == nil) {
         
-        _MA_3ShapeLayer = [self getMALayer];
+        _MA_3ShapeLayer = [self getLineLayer];
         [self.contentView.layer addSublayer:_MA_3ShapeLayer];
     }
     return _MA_3ShapeLayer;
@@ -92,7 +92,7 @@
     
     if (_MA_4ShapeLayer == nil) {
         
-        _MA_4ShapeLayer = [self getMALayer];
+        _MA_4ShapeLayer = [self getLineLayer];
         [self.contentView.layer addSublayer:_MA_4ShapeLayer];
     }
     return _MA_4ShapeLayer;
@@ -307,12 +307,12 @@
 #pragma mark - 计算
 - (CGFloat)getKLineMaxX {
     
-    return self.cWidth;
+    return self.cWidth - 2 * 1;
 }
 
 - (CGFloat)getKLineMinX {
     
-    return 0;
+    return 1;
 }
 
 - (CGFloat)getKLineUnitValue {

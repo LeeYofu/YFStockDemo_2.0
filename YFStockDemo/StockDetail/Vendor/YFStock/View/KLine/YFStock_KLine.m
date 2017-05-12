@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) NSArray *allKLineModels; // 所有的K线模型
 @property (nonatomic, strong) YFStock_DataHandler *dataHandler; // dataHandler
+
 @property (nonatomic, assign) CGFloat currentHeight;
 @property (nonatomic, assign) CGFloat lastHeight;
 
@@ -27,12 +28,12 @@
 @property (nonatomic, assign) CGFloat belowMax;
 @property (nonatomic, assign) CGFloat belowMin;
 
-@property (nonatomic, strong) NSArray <YFStock_KLineModel *> *drawKLineModels;
+@property (nonatomic, strong) NSMutableArray *aboveValueLabels;
+@property (nonatomic, strong) NSMutableArray *belowValueLabels;
 
 @property (nonatomic, strong) UITableView *aboveView;
 @property (nonatomic, strong) UITableView *belowView;
 @property (nonatomic, strong) YFStock_KLineMaskView *maskView; // 长按手势遮罩view（十字线）
-
 
 @end
 
@@ -65,6 +66,7 @@
 - (void)createSubviews {
     
     [self create_aboveView_belowView];
+    [self createBackgroundLine];
 }
 
 - (void)create_aboveView_belowView {
@@ -96,8 +98,8 @@
     tableView.showsVerticalScrollIndicator = NO;
 //    tableView.decelerationRate = 0.9;
     tableView.clipsToBounds = NO;
-    tableView.layer.borderColor = kStockKlinePartLineColor.CGColor;
-    tableView.layer.borderWidth = 0.5f;
+//    tableView.layer.borderColor = kStockKlinePartLineColor.CGColor;
+//    tableView.layer.borderWidth = 0.5f;
     
     // 缩放
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(event_pinchAction:)];
@@ -111,6 +113,167 @@
 
     return tableView;
 }
+
+- (void)createBackgroundLine {
+    
+    CGFloat valueLabelWidth = 100;
+    CGFloat valueLabelHeight = 15;
+    [self.aboveValueLabels removeAllObjects];
+    [self.belowValueLabels removeAllObjects];
+    
+    // above
+    CGFloat aboveUnitHeight = self.aboveView.height / [YFStock_Variable KLineRowCount];
+    for (int i = 0; i < [YFStock_Variable KLineRowCount] + 1; i ++) {
+        
+        // background line
+        UIView *backgroundLine = [UIView new];
+        backgroundLine.backgroundColor = kStockKlinePartLineColor;
+        backgroundLine.frame = CGRectMake(self.aboveView.x, self.aboveView.y + i * aboveUnitHeight, self.aboveView.width, kStockPartLineHeight);
+        [self insertSubview:backgroundLine belowSubview:self.aboveView];
+        
+        // value label
+        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
+        [self addSubview:label];
+        
+        [self.aboveValueLabels addObject:label];
+    }
+    
+    // below
+    NSInteger belowViewRowCount = 1;
+    CGFloat belowUnitHeight = self.belowView.height / belowViewRowCount;
+    for (int i = 0; i < belowViewRowCount + 1; i ++) {
+        
+        // background line
+        UIView *backgroundLine = [UIView new];
+        backgroundLine.backgroundColor = kStockKlinePartLineColor;
+        backgroundLine.frame = CGRectMake(self.belowView.x, self.belowView.y + i * belowUnitHeight, self.belowView.width, kStockPartLineHeight);
+        [self insertSubview:backgroundLine belowSubview:self.belowView];
+        
+        // value label
+        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
+        [self addSubview:label];
+        
+        [self.belowValueLabels addObject:label];
+    }
+}
+
+- (UILabel *)getValueLabelWithFrame:(CGRect)frame {
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:frame];
+    label.font = kFont_9;
+    label.textAlignment = NSTextAlignmentRight;
+    label.textColor = kCustomRGBColor(103, 103, 103, 1.0f);;
+    return label;
+}
+
+#pragma mark - tableView代理方法
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return self.allKLineModels.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if ([tableView isEqual:self.aboveView]) {
+        
+        YF_Stock_KLineAboveViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"aboveCell"];
+        
+        cell.isFullScreen = [YFStock_Variable isFullScreen];
+        cell.topBarSelectedIndex = [YFStock_Variable selectedIndex];
+        cell.visibleMax = self.aboveMax;
+        cell.visibleMin = self.aboveMin;
+        cell.cWidth = self.aboveView.height;
+        cell.cHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
+        cell.KLineModel = self.allKLineModels[indexPath.row];
+        
+        //判断是否有上一个值
+        if (indexPath.row > 0) {
+            
+            YFStock_KLineModel *lastModel = self.allKLineModels[indexPath.row - 1];
+            cell.lastKLineModel = lastModel;
+        } else {
+            
+            cell.lastKLineModel = nil;
+        }
+        //判断是否有下一个
+        if (indexPath.row < self.allKLineModels.count - 1) {
+            
+            YFStock_KLineModel *nextModel = self.allKLineModels[indexPath.row + 1];
+            cell.nextKLineModel = nextModel;
+        } else {
+            
+            cell.nextKLineModel = nil;
+        }
+        
+        return cell;
+
+    } else {
+        
+        YF_Stock_KLineBelowViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belowCell"];
+        
+        cell.isFullScreen = [YFStock_Variable isFullScreen];
+        cell.topBarSelectedIndex = [YFStock_Variable selectedIndex];
+        cell.visibleMax = self.belowMax;
+        cell.visibleMin = self.belowMin;
+        cell.cWidth = self.belowView.height;
+        cell.cHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
+
+        cell.KLineModel = self.allKLineModels[indexPath.row];
+        
+        //判断是否有上一个值
+        if (indexPath.row > 0) {
+            
+            YFStock_KLineModel *lastModel = self.allKLineModels[indexPath.row - 1];
+            cell.lastKLineModel = lastModel;
+        } else {
+            
+            cell.lastKLineModel = nil;
+        }
+        //判断是否有下一个
+        if (indexPath.row < self.allKLineModels.count - 1) {
+            
+            YFStock_KLineModel *nextModel = self.allKLineModels[indexPath.row + 1];
+            cell.nextKLineModel = nextModel;
+        } else {
+            
+            cell.nextKLineModel = nil;
+        }
+
+        // 放在最后
+        cell.bottomBarIndex = self.bottomBarIndex;
+        
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return ([YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap]);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    [self updateData];
+
+    if ([scrollView isEqual:self.aboveView]) {
+        
+        self.belowView.contentOffset = self.aboveView.contentOffset;
+    } else {
+        
+        self.aboveView.contentOffset = self.belowView.contentOffset;
+    }
+}
+
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+//    
+//    if (decelerate) {
+//        
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            printf("STOP IT!!\n");
+//            [scrollView setContentOffset:scrollView.contentOffset animated:NO];
+//        });
+//    }
+//}
 
 #pragma mark - 更新数据
 - (void)updateData {
@@ -130,7 +293,6 @@
     NSIndexPath *firstIndexPath = indexPaths.firstObject;
     NSIndexPath *lastIndexPath = indexPaths.lastObject;
     NSArray *drawKLineModels = [self.allKLineModels subarrayWithRange:NSMakeRange(firstIndexPath.row, lastIndexPath.row - firstIndexPath.row + 1)];
-    self.drawKLineModels = drawKLineModels;
     [self.dataHandler handleKLineModelDatasWithDrawKlineModelArray:drawKLineModels pointStartX:0 KLineViewHeight:self.aboveView.height volumeViewHeight:self.belowView.height bottomBarIndex:self.bottomBarIndex];
     
     if (self.aboveMax != self.dataHandler.maxKLineValue || self.aboveMin != self.dataHandler.minKLineValue) {
@@ -274,6 +436,8 @@
         self.belowMin = belowMin;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"KLineBelowMaxMinValueChanged" object:@[ @(self.belowMax), @(self.belowMin) ]];
     }
+    
+    [self setValueLabelsValue];
 }
 
 #pragma mark - Draw相关
@@ -284,11 +448,11 @@
     [self updateData];
     [self tableViewReloadData];
     
-//    [self.aboveView setContentOffset:CGPointMake(0, self.aboveView.contentSize.height - self.aboveView.width)];
-//    [self.belowView setContentOffset:CGPointMake(0, self.belowView.contentSize.height - self.belowView.width)];
+    //    [self.aboveView setContentOffset:CGPointMake(0, self.aboveView.contentSize.height - self.aboveView.width)];
+    //    [self.belowView setContentOffset:CGPointMake(0, self.belowView.contentSize.height - self.belowView.width)];
     [self.aboveView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:allKLineModels.count ? allKLineModels.count - 1 : 0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
     [self.belowView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:allKLineModels.count ? allKLineModels.count - 1 : 0 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:NO];
-
+    
 }
 
 - (void)refresh {
@@ -303,7 +467,7 @@
     if (hidden) {
         
         self.allKLineModels = @[];
-
+        
         [self tableViewReloadData];
     }
 }
@@ -312,122 +476,26 @@
     
     [self.aboveView reloadData];
     [self.belowView reloadData];
-    
 }
 
-#pragma mark - tableView代理方法
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (void)setValueLabelsValue {
     
-    return self.allKLineModels.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    // above
+    CGFloat aboveUnitValue = (self.aboveMax - self.aboveMin) / [YFStock_Variable KLineRowCount];
+    for (int i = 0; i < self.aboveValueLabels.count; i ++) {
+        
+        UILabel *label = self.aboveValueLabels[i];
+        label.text = [NSString stringWithFormat:@"%.2f", (self.aboveMax - aboveUnitValue * i)];
+    }
     
-//    UITableViewCell *cell = [UITableViewCell new];
-//    cell.backgroundColor = kClearColor;
-//    cell.contentView.backgroundColor = kClearColor;
-//    return cell;
-    
-    if ([tableView isEqual:self.aboveView]) {
+    // below
+    CGFloat belowUnitValue = (self.belowMax - self.belowMin) / 1;
+    for (int i = 0; i < self.belowValueLabels.count; i ++) {
         
-        YF_Stock_KLineAboveViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"aboveCell"];
-        
-        cell.isFullScreen = [YFStock_Variable isFullScreen];
-        cell.topBarSelectedIndex = [YFStock_Variable selectedIndex];
-        cell.visibleMax = self.aboveMax;
-        cell.visibleMin = self.aboveMin;
-        cell.cWidth = self.aboveView.height;
-        cell.cHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
-        cell.KLineModel = self.allKLineModels[indexPath.row];
-        
-        //判断是否有上一个值
-        if (indexPath.row > 0) {
-            
-            YFStock_KLineModel *lastModel = self.allKLineModels[indexPath.row - 1];
-            cell.lastKLineModel = lastModel;
-        } else {
-            
-            cell.lastKLineModel = nil;
-        }
-        //判断是否有下一个
-        if (indexPath.row < self.allKLineModels.count - 1) {
-            
-            YFStock_KLineModel *nextModel = self.allKLineModels[indexPath.row + 1];
-            cell.nextKLineModel = nextModel;
-        } else {
-            
-            cell.nextKLineModel = nil;
-        }
-        
-        return cell;
-
-    } else {
-        
-        YF_Stock_KLineBelowViewTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"belowCell"];
-        
-        cell.isFullScreen = [YFStock_Variable isFullScreen];
-        cell.topBarSelectedIndex = [YFStock_Variable selectedIndex];
-        cell.visibleMax = self.belowMax;
-        cell.visibleMin = self.belowMin;
-        cell.cWidth = self.belowView.height;
-        cell.cHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
-
-        cell.KLineModel = self.allKLineModels[indexPath.row];
-        
-        //判断是否有上一个值
-        if (indexPath.row > 0) {
-            
-            YFStock_KLineModel *lastModel = self.allKLineModels[indexPath.row - 1];
-            cell.lastKLineModel = lastModel;
-        } else {
-            
-            cell.lastKLineModel = nil;
-        }
-        //判断是否有下一个
-        if (indexPath.row < self.allKLineModels.count - 1) {
-            
-            YFStock_KLineModel *nextModel = self.allKLineModels[indexPath.row + 1];
-            cell.nextKLineModel = nextModel;
-        } else {
-            
-            cell.nextKLineModel = nil;
-        }
-
-        // 放在最后
-        cell.bottomBarIndex = self.bottomBarIndex;
-        
-        return cell;
+        UILabel *label = self.belowValueLabels[i];
+        label.text = [NSString stringWithFormat:@"%.2f", (self.belowMax - belowUnitValue * i)];
     }
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return ([YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap]);
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    [self updateData];
-
-    if ([scrollView isEqual:self.aboveView]) {
-        
-        self.belowView.contentOffset = self.aboveView.contentOffset;
-    } else {
-        
-        self.aboveView.contentOffset = self.belowView.contentOffset;
-    }
-}
-
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-//    
-//    if (decelerate) {
-//        
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            printf("STOP IT!!\n");
-//            [scrollView setContentOffset:scrollView.contentOffset animated:NO];
-//        });
-//    }
-//}
 
 #pragma mark - 手势相关
 - (void)event_pinchAction:(UIPinchGestureRecognizer *)gesture {
@@ -549,6 +617,24 @@
         _allKLineModels = [NSArray new];
     }
     return _allKLineModels;
+}
+
+- (NSMutableArray *)aboveValueLabels {
+    
+    if (_aboveValueLabels == nil) {
+        
+        _aboveValueLabels = [NSMutableArray new];
+    }
+    return _aboveValueLabels;
+}
+
+- (NSMutableArray *)belowValueLabels {
+    
+    if (_belowValueLabels == nil) {
+        
+        _belowValueLabels = [NSMutableArray new];
+    }
+    return _belowValueLabels;
 }
 
 - (YFStock_DataHandler *)dataHandler {

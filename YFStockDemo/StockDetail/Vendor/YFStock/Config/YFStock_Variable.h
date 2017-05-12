@@ -21,6 +21,7 @@
 + (CGFloat)timeLineWidth;
 + (CGFloat)timeLineGap;
 + (BOOL)isFullScreen;
++ (NSInteger)bottomBarSelectedIndex;
 
 // setter
 + (void)setKLineWidth:(CGFloat)KLineWidth;
@@ -28,6 +29,7 @@
 + (void)setKlineRowCount:(CGFloat)KLineRowCount;
 + (void)setIsFullScreen:(BOOL)isFullScreen;
 + (void)setSelectedIndex:(NSInteger)selectedIndex;
++ (void)setBottomBarSelectedIndex:(NSInteger)bottomBarSelectedIndex;
 + (void)setTimeLineWidth:(CGFloat)timeLineWidth;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "YF_Stock_KLineAboveViewTableViewCell.h"
-#import "YFStock_Header.h"
 
 @interface YF_Stock_KLineAboveViewTableViewCell()
 
@@ -38,10 +37,10 @@
     if (_KLineShapeLayer == nil) {
         
         _KLineShapeLayer = [CAShapeLayer layer];
-//        _KLineShapeLayer.backgroundColor = kWhiteColor.CGColor;
+        _KLineShapeLayer.frame = self.contentView.bounds;
         _KLineShapeLayer.lineJoin = kCALineJoinRound;
         _KLineShapeLayer.lineCap = kCALineCapRound;
-        [self.contentView.layer addSublayer:_KLineShapeLayer];
+        [self.layer addSublayer:_KLineShapeLayer];
     }
     return _KLineShapeLayer;
 }
@@ -49,11 +48,13 @@
 - (CAShapeLayer *)getLineLayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-//    layer.backgroundColor = kWhiteColor.CGColor;
+    layer.frame = self.contentView.bounds;
     layer.fillColor = kClearColor.CGColor;
     layer.lineWidth = 1.0f;
     layer.lineJoin = kCALineJoinRound;
     layer.lineCap = kCALineCapRound;
+    
+    [self.contentView.layer addSublayer:layer];
     
     return layer;
 }
@@ -63,7 +64,6 @@
     if (_MA_1ShapeLayer == nil) {
         
         _MA_1ShapeLayer = [self getLineLayer];
-        [self.contentView.layer addSublayer:_MA_1ShapeLayer];
     }
     return _MA_1ShapeLayer;
 }
@@ -73,7 +73,6 @@
     if (_MA_2ShapeLayer == nil) {
         
         _MA_2ShapeLayer = [self getLineLayer];
-        [self.contentView.layer addSublayer:_MA_2ShapeLayer];
     }
     return _MA_2ShapeLayer;
 }
@@ -83,7 +82,6 @@
     if (_MA_3ShapeLayer == nil) {
         
         _MA_3ShapeLayer = [self getLineLayer];
-        [self.contentView.layer addSublayer:_MA_3ShapeLayer];
     }
     return _MA_3ShapeLayer;
 }
@@ -93,10 +91,42 @@
     if (_MA_4ShapeLayer == nil) {
         
         _MA_4ShapeLayer = [self getLineLayer];
-        [self.contentView.layer addSublayer:_MA_4ShapeLayer];
     }
     return _MA_4ShapeLayer;
 }
+
+- (UIView *)partLine {
+    
+    if (_partLine == nil) {
+        
+        _partLine = [UIView new];
+        _partLine.backgroundColor = kStockKlinePartLineColor;
+        [self.contentView addSubview:_partLine];
+        _partLine.hidden = YES;
+        
+        _partLine.frame = CGRectMake(-kStockKLineAboveViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineAboveViewTopBottomPadding, kStockPartLineHeight);
+    }
+    return _partLine;
+}
+
+- (UILabel *)timeLabel {
+    
+    if (_timeLabel == nil) {
+        
+        _timeLabel = [UILabel new];
+        _timeLabel.font = kFont_9;
+        _timeLabel.textColor = kCustomRGBColor(103, 103, 103, 1.0);
+        _timeLabel.hidden = YES;
+        _timeLabel.backgroundColor = kClearColor;
+        _timeLabel.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_timeLabel];
+        _timeLabel.transform = CGAffineTransformMakeRotation(M_PI * 0.5);
+        
+        _timeLabel.frame = CGRectMake(-15 - kStockKLineAboveViewTopBottomPadding, -30 + self.cHeight * 0.5, 15, 60);
+    }
+    return _timeLabel;
+}
+
 
 #pragma mark - init
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -110,36 +140,8 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(KLineAboveMaxMinValueChanged:) name:@"KLineAboveMaxMinValueChanged" object:nil];
-        
-        [self createSubviews];
     }
     return self;
-}
-
-- (void)createSubviews {
-    
-    self.partLine = [UIView new];
-    self.partLine.backgroundColor = kStockKlinePartLineColor;
-    [self.contentView addSubview:self.partLine];
-    self.partLine.hidden = YES;
-    
-    self.timeLabel = [UILabel new];
-    self.timeLabel.font = kFont_9;
-    self.timeLabel.textColor = kCustomRGBColor(103, 103, 103, 1.0);
-    self.timeLabel.hidden = YES;
-    self.timeLabel.backgroundColor = kClearColor;
-    self.timeLabel.textAlignment = NSTextAlignmentCenter;
-    [self.contentView addSubview:self.timeLabel];
-    self.timeLabel.transform = CGAffineTransformMakeRotation(M_PI * 0.5);
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-    
-    self.timeLabel.frame = CGRectMake(-15 - kStockKLineAboveViewTopBottomPadding, -30 + self.cHeight * 0.5, 15, 60);
-    
-    self.partLine.frame = CGRectMake(-kStockKLineAboveViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineAboveViewTopBottomPadding, kStockPartLineHeight);
 }
 
 - (void)KLineAboveMaxMinValueChanged:(NSNotification *)notify {
@@ -149,7 +151,7 @@
     self.visibleMax = [arr[0] floatValue];
     self.visibleMin = [arr[1] floatValue];
     
-    if (self.isFullScreen == [YFStock_Variable isFullScreen] && self.topBarSelectedIndex == [YFStock_Variable selectedIndex]) {
+    if (self.isFullScreen == [YFStock_Variable isFullScreen] && self.topBarSelectedIndex == [YFStock_Variable selectedIndex] && self.bottomBarIndex == [YFStock_Variable bottomBarSelectedIndex]) {
         
         [self drawAllLine];
     }
@@ -226,12 +228,13 @@
     [path addLineToPoint:CGPointMake(x - bottomLineHeight, highLowY)];
     
     [CATransaction begin];
-    [CATransaction setDisableActions:YES]; // yes
+    [CATransaction setDisableActions:YES];
     self.KLineShapeLayer.fillColor = self.KLineModel.isIncrease ? kWhiteColor.CGColor : strokeColor.CGColor;
     self.KLineShapeLayer.strokeColor = strokeColor.CGColor;
     [CATransaction commit];
     
     self.KLineShapeLayer.path = path.CGPath;
+    
 }
 
 - (void)drawMALine {

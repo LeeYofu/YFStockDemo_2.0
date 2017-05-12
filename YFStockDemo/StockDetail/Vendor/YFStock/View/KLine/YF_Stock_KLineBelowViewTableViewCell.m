@@ -30,11 +30,12 @@
 - (CAShapeLayer *)getLineLayer {
     
     CAShapeLayer *layer = [CAShapeLayer layer];
-//    layer.backgroundColor = kWhiteColor.CGColor;
+    layer.frame = self.contentView.bounds;
     layer.fillColor = kClearColor.CGColor;
     layer.lineWidth = 1.0f;
     layer.lineJoin = kCALineJoinRound;
     layer.lineCap = kCALineCapRound;
+    [self.contentView.layer addSublayer:layer];
     return layer;
 }
 
@@ -43,7 +44,6 @@
     if (_layer1 == nil) {
         
         _layer1 = [self getLineLayer];
-        [self.contentView.layer addSublayer:_layer1];
     }
     return _layer1;
 }
@@ -53,7 +53,6 @@
     if (_layer2 == nil) {
         
         _layer2 = [self getLineLayer];
-        [self.contentView.layer addSublayer:_layer2];
     }
     return _layer2;
 }
@@ -63,7 +62,6 @@
     if (_layer3 == nil) {
         
         _layer3 = [self getLineLayer];
-        [self.contentView.layer addSublayer:_layer3];
     }
     return _layer3;
 }
@@ -73,7 +71,6 @@
     if (_layer4 == nil) {
         
         _layer4 = [self getLineLayer];
-        [self.contentView.layer addSublayer:_layer4];
     }
     return _layer4;
 }
@@ -83,9 +80,22 @@
     if (_barLayer == nil) {
         
         _barLayer = [self getLineLayer];
-        [self.contentView.layer addSublayer:_barLayer];
     }
     return _barLayer;
+}
+
+- (UIView *)partLine {
+    
+    if (_partLine == nil) {
+        
+        _partLine = [UIView new];
+        _partLine.backgroundColor = kStockKlinePartLineColor;
+        [self.contentView addSubview:_partLine];
+        _partLine.hidden = YES;
+        
+        _partLine.frame = CGRectMake(-kStockKLineBelowViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineBelowViewTopBottomPadding, kStockPartLineHeight);
+    }
+    return _partLine;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -95,29 +105,13 @@
     if (self) {
         
         self.backgroundColor = kClearColor;
-        
+
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(KLineBelowMaxMinValueChanged:) name:@"KLineBelowMaxMinValueChanged" object:nil];
         
-        [self createSubviews];
     }
     return self;
-}
-
-- (void)createSubviews {
-    
-    self.partLine = [UIView new];
-    self.partLine.backgroundColor = kStockKlinePartLineColor;
-    [self.contentView addSubview:self.partLine];
-    self.partLine.hidden = YES;
-}
-
-- (void)layoutSubviews {
-    
-    [super layoutSubviews];
-        
-    self.partLine.frame = CGRectMake(-kStockKLineBelowViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineBelowViewTopBottomPadding, kStockPartLineHeight);
 }
 
 - (void)KLineBelowMaxMinValueChanged:(NSNotification *)notify {
@@ -127,7 +121,7 @@
     self.visibleMax = [arr[0] floatValue];
     self.visibleMin = [arr[1] floatValue];
     
-    if (self.isFullScreen == [YFStock_Variable isFullScreen] && self.topBarSelectedIndex == [YFStock_Variable selectedIndex]) {
+    if (self.isFullScreen == [YFStock_Variable isFullScreen] && self.topBarSelectedIndex == [YFStock_Variable selectedIndex] && self.bottomBarIndex == [YFStock_Variable bottomBarSelectedIndex]) {
         
         [self drawWithBottomBarIndex:self.bottomBarIndex];
     }

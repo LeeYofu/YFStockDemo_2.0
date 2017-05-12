@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YFStock_Header.h"
 #import "YFStock_KLineModel.h"
 
 @interface YF_Stock_KLineAboveViewTableViewCell : UITableViewCell
@@ -20,6 +21,6 @@
 @property (nonatomic, strong) YFStock_KLineModel *nextKLineModel;
 @property (nonatomic, assign) BOOL isFullScreen;
 @property (nonatomic, assign) NSInteger topBarSelectedIndex;
-
+@property (nonatomic, assign) YFStockBottomBarIndex bottomBarIndex;
 
 @end

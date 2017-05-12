@@ -31,8 +31,12 @@
 @property (nonatomic, strong) NSMutableArray *aboveValueLabels;
 @property (nonatomic, strong) NSMutableArray *belowValueLabels;
 
+@property (nonatomic, assign) CGFloat lastContentOffsetY;
+
 @property (nonatomic, strong) UITableView *aboveView;
 @property (nonatomic, strong) UITableView *belowView;
+@property (nonatomic, strong) UILabel *aboveLabel;
+@property (nonatomic, strong) UILabel *belowLabel;
 @property (nonatomic, strong) YFStock_KLineMaskView *maskView; // 长按手势遮罩view（十字线）
 
 @end
@@ -65,7 +69,6 @@
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
     longPress.minimumPressDuration = 0.2f;
     [self addGestureRecognizer:longPress];
-    
 }
 
 #pragma mark - 布局子视图
@@ -74,6 +77,7 @@
     [self create_aboveView_belowView];
     [self createBackgroundLine];
     [self createBoardLine];
+    [self create_aboveLabel_belowLabel];
 }
 
 - (void)create_aboveView_belowView {
@@ -92,18 +96,18 @@
 - (UITableView *)createTableViewWithFrame:(CGRect)frame {
     
     UITableView *tableView = [UITableView new];
+    tableView.backgroundColor = kClearColor;
     tableView.delegate = self;
     tableView.dataSource = self;
     [self addSubview:tableView];
     tableView.transform = CGAffineTransformMakeRotation(M_PI * -0.5);
     tableView.frame = frame;
     
-    tableView.backgroundColor = kClearColor;
     tableView.allowsSelection = NO;
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.separatorColor = kClearColor;
     tableView.showsVerticalScrollIndicator = NO;
-//    tableView.decelerationRate = 0.9;
+//    tableView.decelerationRate = 0.95;
     tableView.clipsToBounds = NO;
     
     // 缩放
@@ -195,6 +199,24 @@
     [self addSubview:backgroundLine4];
 }
 
+- (void)create_aboveLabel_belowLabel {
+    
+    CGFloat labelHeight = 12;
+    
+    self.aboveLabel = [[UILabel alloc] initWithFrame:CGRectMake(7, 1, 0, labelHeight)];
+    self.aboveLabel.font = kFont_9;
+    [self addSubview:self.aboveLabel];
+    [self addSubview:self.aboveLabel];
+    
+    self.belowLabel = [[UILabel alloc] initWithFrame:CGRectMake(7, self.belowView.y - kStockKLineBelowViewTopBottomPadding + 1, 0, labelHeight)];
+    self.belowLabel.font = kFont_9;
+    [self addSubview:self.belowLabel];
+    [self addSubview:self.belowLabel];
+    
+    self.aboveLabel.backgroundColor = kWhiteColor;
+    self.belowLabel.backgroundColor = kWhiteColor;
+}
+
 #pragma mark - tableView代理方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -214,7 +236,8 @@
         cell.cWidth = self.aboveView.height;
         cell.cHeight = [YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap];
         cell.KLineModel = self.allKLineModels[indexPath.row];
-        
+        cell.bottomBarIndex = self.bottomBarIndex;
+
         //判断是否有上一个值
         if (indexPath.row > 0) {
             
@@ -282,7 +305,12 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    [self updateData];
+    if (ABS(scrollView.contentOffset.y - self.lastContentOffsetY) > self.currentHeight) {
+        
+        [self updateData];
+        
+        self.lastContentOffsetY = scrollView.contentOffset.y;
+    }
 
     if ([scrollView isEqual:self.aboveView]) {
         
@@ -291,6 +319,7 @@
         
         self.aboveView.contentOffset = self.belowView.contentOffset;
     }
+    
 }
 
 //- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -466,7 +495,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"KLineBelowMaxMinValueChanged" object:@[ @(self.belowMax), @(self.belowMin) ]];
     }
     
-    [self setValueLabelsValue];
+    [self setRightValueLabelsValue];
+    [self setLeftValueLabelsValueWithKLineModel:self.allKLineModels[lastIndexPath.row]];
 }
 
 #pragma mark - Draw相关
@@ -507,7 +537,7 @@
     [self.belowView reloadData];
 }
 
-- (void)setValueLabelsValue {
+- (void)setRightValueLabelsValue {
     
     // above
     CGFloat aboveUnitValue = (self.aboveMax - self.aboveMin) / [YFStock_Variable KLineRowCount];
@@ -524,6 +554,15 @@
         UILabel *label = self.belowValueLabels[i];
         label.text = [NSString stringWithFormat:@"%.2f", (self.belowMax - belowUnitValue * i)];
     }
+}
+
+- (void)setLeftValueLabelsValueWithKLineModel:(YFStock_KLineModel *)KLineModel {
+    
+    self.aboveLabel.attributedText = [self.dataHandler getKLineAboveViewLeftLabelTextWithKLineModel:KLineModel type:0];
+    [self.aboveLabel sizeToFit];
+    
+    self.belowLabel.attributedText = [self.dataHandler getKLineBelowViewLeftLabelTextWithKLineModel:KLineModel type:self.bottomBarIndex];
+    [self.belowLabel sizeToFit];
 }
 
 #pragma mark - 手势相关
@@ -621,7 +660,11 @@
     if(longPress.state == UIGestureRecognizerStateEnded || longPress.state == UIGestureRecognizerStateCancelled || longPress.state == UIGestureRecognizerStateFailed) {
         
         self.maskView.hidden = YES;
+        
+        selectedModel = self.allKLineModels[[[[self.aboveView indexPathsForVisibleRows] lastObject] row]];
     }
+    
+    [self setLeftValueLabelsValueWithKLineModel:selectedModel];
 }
 
 
@@ -636,6 +679,7 @@
     if (_bottomBarIndex != bottomBarIndex) {
         
         _bottomBarIndex = bottomBarIndex;
+        [YFStock_Variable setBottomBarSelectedIndex:bottomBarIndex];
         
 //        // belowView刷新重绘线条
         [self updateData];

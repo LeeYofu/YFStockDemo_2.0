@@ -8,6 +8,8 @@
 
 #import "YFStock_DataHandler.h"
 
+#define kAttrStrDefaultColor kCustomRGBColor(103, 103, 103, 1.0)
+
 @implementation YFStock_DataHandler
 
 #pragma mark - 初始化
@@ -37,7 +39,7 @@
     
     __block CGFloat pointStartX = 0;
     [drawTimeLineModelArray enumerateObjectsUsingBlock:^(YFStock_TimeLineModel *timeLineModel, NSUInteger idx, BOOL * _Nonnull stop) {
-       
+        
         CGFloat y = timeLineMaxY - (timeLineModel.bidPrice1 - self.minTimeLineValue) / timeLineUnitValue;
         CGPoint pricePositionPoint = CGPointMake(pointStartX, y);
         timeLineModel.pricePositionPoint = pricePositionPoint;
@@ -57,9 +59,9 @@
     
     NSString *openTimeListPath = [[NSBundle mainBundle] pathForResource:@"OpenTimeList" ofType:@"plist"];
     NSDictionary *openTimeListDic = [NSDictionary dictionaryWithContentsOfFile:openTimeListPath];
-
+    
     NSDictionary *openTimeInfoDic = openTimeListDic[stockType];
-
+    
     CGFloat tradingHours = [openTimeInfoDic[@"tradingTime"] floatValue];
     
     totalMinutes = 60 * tradingHours;
@@ -73,7 +75,7 @@
 - (NSMutableArray <YFStock_KLineModel *> *)handleAllKLineOriginDataArray:(NSArray *)KLineOriginDataArray topBarIndex:(YFStockTopBarIndex)topBarIndex {
     
     NSMutableArray *allKLineModelArray = [NSMutableArray new];
-
+    
     for (int i = 0; i < KLineOriginDataArray.count; i ++) {
         
         NSDictionary *dic = KLineOriginDataArray[i];
@@ -90,22 +92,20 @@
         [allKLineModelArray addObject:KLineModel];
     }
     
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
     
-        for (int i = 0; i < allKLineModelArray.count; i ++) {
-            
-            YFStock_KLineModel *model = allKLineModelArray[i];
-            
-            model.allModelArray = [NSArray arrayWithArray:allKLineModelArray];
-            
-            [model initData];
-            
-            [allKLineModelArray replaceObjectAtIndex:i withObject:model];
-        }
-//    });
-
+    for (int i = 0; i < allKLineModelArray.count; i ++) {
+        
+        YFStock_KLineModel *model = allKLineModelArray[i];
+        
+        model.allModelArray = [NSArray arrayWithArray:allKLineModelArray];
+        
+        [model initData];
+        
+        [allKLineModelArray replaceObjectAtIndex:i withObject:model];
+    }
+    
     return allKLineModelArray;
-
+    
 }
 
 #pragma mark 处理时间显示事件
@@ -169,8 +169,8 @@
 - (void)handleKLineModelDatasWithDrawKlineModelArray:(NSArray *)drawKLineModelArray pointStartX:(CGFloat)pointStartX KLineViewHeight:(CGFloat)KLineViewHeight volumeViewHeight:(CGFloat)volumeViewHeight bottomBarIndex:(YFStockBottomBarIndex)bottomBarIndex {
     
     [self getMaxValueMinValueWithDrawKlineModelArray:drawKLineModelArray bottomBarIndex:bottomBarIndex];
-
-//    [self getPositionWithDrawKlineModelArray:drawKLineModelArray pointStartX:pointStartX KLineViewHeight:KLineViewHeight volumeViewHeight:volumeViewHeight bottomBarIndex:bottomBarIndex];
+    
+    //    [self getPositionWithDrawKlineModelArray:drawKLineModelArray pointStartX:pointStartX KLineViewHeight:KLineViewHeight volumeViewHeight:volumeViewHeight bottomBarIndex:bottomBarIndex];
 }
 
 #pragma mark 处理最大最小值
@@ -354,12 +354,12 @@
     //    max = MAX(max, MAX(BOLL_UPPERmax, MAX(BOLL_MIDmax, BOLL_LOWERmax)));
     //    min = MIN(min, MIN(BOLL_UPPERmin, MIN(BOLL_MIDmin, BOLL_LOWERmin)));
     
-//    if (self.maxKLineValue != max || self.minKLineValue != min) {
-//        
-//        self.maxKLineValue = max;
-//        self.minKLineValue = min;
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"KLineAboveMaxMinValueChanged" object:@[ @(self.maxKLineValue), @(self.minKLineValue) ]];
-//    }
+    //    if (self.maxKLineValue != max || self.minKLineValue != min) {
+    //
+    //        self.maxKLineValue = max;
+    //        self.minKLineValue = min;
+    //        [[NSNotificationCenter defaultCenter] postNotificationName:@"KLineAboveMaxMinValueChanged" object:@[ @(self.maxKLineValue), @(self.minKLineValue) ]];
+    //    }
     
     self.maxKLineValue = max;
     self.minKLineValue = min;
@@ -525,11 +525,11 @@
     CGFloat maxCR = [[[drawKLineModelArray valueForKeyPath:@"CR"] valueForKeyPath:@"@max.floatValue"] floatValue];
     CGFloat maxCR_MA_1 = [[[drawKLineModelArray valueForKeyPath:@"CR_MA_1"] valueForKeyPath:@"@max.floatValue"] floatValue];
     CGFloat maxCR_MA_2 = [[[drawKLineModelArray valueForKeyPath:@"CR_MA_2"] valueForKeyPath:@"@max.floatValue"] floatValue];
-
+    
     CGFloat minCR = [[[drawKLineModelArray valueForKeyPath:@"CR"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat minCR_MA_1 = [[[drawKLineModelArray valueForKeyPath:@"CR_MA_1"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat minCR_MA_2 = [[[drawKLineModelArray valueForKeyPath:@"CR_MA_2"] valueForKeyPath:@"@min.floatValue"] floatValue];
-
+    
     self.CRMaxValue = MAX(maxCR, MAX(maxCR_MA_1, maxCR_MA_2));
     self.CRMinValue = MIN(minCR, MIN(minCR_MA_1, minCR_MA_2));
 }
@@ -540,7 +540,7 @@
     CGFloat maxDMI_MDI = [[[drawKLineModelArray valueForKeyPath:@"DMI_MDI"] valueForKeyPath:@"@max.floatValue"] floatValue];
     CGFloat maxDMI_ADX = [[[drawKLineModelArray valueForKeyPath:@"DMI_ADX"] valueForKeyPath:@"@max.floatValue"] floatValue];
     CGFloat maxDMI_ADXR = [[[drawKLineModelArray valueForKeyPath:@"DMI_ADXR"] valueForKeyPath:@"@max.floatValue"] floatValue];
-
+    
     CGFloat minDMI_PDI = [[[drawKLineModelArray valueForKeyPath:@"DMI_PDI"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat minDMI_MDI = [[[drawKLineModelArray valueForKeyPath:@"DMI_MDI"] valueForKeyPath:@"@min.floatValue"] floatValue];
     CGFloat minDMI_ADX = [[[drawKLineModelArray valueForKeyPath:@"DMI_ADX"] valueForKeyPath:@"@min.floatValue"] floatValue];
@@ -548,7 +548,7 @@
     
     self.DMIMaxValue = MAX(maxDMI_PDI, MAX(maxDMI_MDI, MAX(maxDMI_ADX, maxDMI_ADXR)));
     self.DMIMinValue = MIN(minDMI_PDI, MIN(minDMI_MDI, MIN(minDMI_ADX, minDMI_ADXR)));
-
+    
 }
 
 - (void)handle_VR_Max_Min_ValueWithDrawKLineModelArray:(NSArray <YFStock_KLineModel *> *)drawKLineModelArray {
@@ -612,99 +612,278 @@
     
 }
 
+#pragma mark - 获取属性字符串
+- (NSMutableAttributedString *)getKLineAboveViewLeftLabelTextWithKLineModel:(YFStock_KLineModel *)KLineModel type:(NSInteger)type {
+    
+    NSMutableAttributedString *attrStrM;
+    NSString *string;
+    switch (type) {
+        case 0: // MA
+        {
+            NSString *string1 = [NSString stringWithFormat:@"MA(%d,%d,%d,%d)", kStock_MA_5_N, kStock_MA_10_N, kStock_MA_20_N, kStock_MA_30_N];
+            NSString *string2 = [NSString stringWithFormat:@" MA%d:%.2f", 5, KLineModel.MA_5.floatValue];
+            NSString *string3 = [NSString stringWithFormat:@" MA%d:%.2f", 10, KLineModel.MA_10.floatValue];
+            NSString *string4 = [NSString stringWithFormat:@" MA%d:%.2f", 20, KLineModel.MA_20.floatValue];
+            NSString *string5 = [NSString stringWithFormat:@" MA%d:%.2f", 30, KLineModel.MA_30.floatValue];
+            
+            string = [NSString stringWithFormat:@"%@%@%@%@%@", string1, string2, string3, string4, string5];
+            attrStrM = [[NSMutableAttributedString alloc] initWithString:string];
+            
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kAttrStrDefaultColor } range:NSMakeRange(0, string1.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA5LineColor } range:NSMakeRange(string1.length, string2.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA10LineColor } range:NSMakeRange(string1.length + string2.length, string3.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA20LineColor } range:NSMakeRange(string1.length + string2.length + string3.length, string4.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA30LineColor } range:NSMakeRange(string1.length + string2.length + string3.length + string4.length, string5.length)];
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return attrStrM;
+}
+
+- (NSMutableAttributedString *)getKLineBelowViewLeftLabelTextWithKLineModel:(YFStock_KLineModel *)KLineModel type:(YFStockBottomBarIndex)type {
+    
+    NSMutableAttributedString *attrStrM;
+    NSString *string;
+    switch (type) {
+        case YFStockBottomBarIndex_MACD:
+        {
+            NSString *string1 = [NSString stringWithFormat:@"MACD(%d,%d,%d)", kStock_MACD_SHORT, kStock_MACD_LONG, kStock_MACD_MID];
+            NSString *string2 = [NSString stringWithFormat:@" DIFF:%.2f", KLineModel.MACD_DIF.floatValue];
+            NSString *string3 = [NSString stringWithFormat:@" DEA:%.2f", KLineModel.MACD_DEA.floatValue];
+            NSString *string4 = [NSString stringWithFormat:@" MACD:%.2f", KLineModel.MACD_BAR.floatValue];
+            
+            string = [NSString stringWithFormat:@"%@%@%@%@", string1, string2, string3, string4];
+            
+            attrStrM = [[NSMutableAttributedString alloc] initWithString:string];
+            
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kAttrStrDefaultColor } range:NSMakeRange(0, string1.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA5LineColor } range:NSMakeRange(string1.length, string2.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA10LineColor } range:NSMakeRange(string1.length + string2.length, string3.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA20LineColor } range:NSMakeRange(string1.length + string2.length + string3.length, string4.length)];
+        }
+            break;
+        case YFStockBottomBarIndex_KDJ:
+        {
+            NSString *string1 = [NSString stringWithFormat:@"KDJ(%d,%d,%d)", kStock_KDJ_N, 3, 3];
+            NSString *string2 = [NSString stringWithFormat:@" K:%.2f", KLineModel.KDJ_K.floatValue];
+            NSString *string3 = [NSString stringWithFormat:@" D:%.2f", KLineModel.KDJ_D.floatValue];
+            NSString *string4 = [NSString stringWithFormat:@" J:%.2f", KLineModel.KDJ_J.floatValue];
+            
+            string = [NSString stringWithFormat:@"%@%@%@%@", string1, string2, string3, string4];
+            
+            attrStrM = [[NSMutableAttributedString alloc] initWithString:string];
+            
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kAttrStrDefaultColor } range:NSMakeRange(0, string1.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA5LineColor } range:NSMakeRange(string1.length, string2.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA10LineColor } range:NSMakeRange(string1.length + string2.length, string3.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA20LineColor } range:NSMakeRange(string1.length + string2.length + string3.length, string4.length)];
+        }
+            break;
+        case YFStockBottomBarIndex_RSI:
+        {
+            NSString *string1 = [NSString stringWithFormat:@"RSI(%d,%d,%d)", kStock_RSI_6_N, kStock_RSI_12_N, kStock_RSI_24_N];
+            NSString *string2 = [NSString stringWithFormat:@" RSI%d:%.2f", kStock_RSI_6_N, KLineModel.RSI_6.floatValue];
+            NSString *string3 = [NSString stringWithFormat:@" RSI%d:%.2f", kStock_RSI_12_N, KLineModel.RSI_12.floatValue];
+            NSString *string4 = [NSString stringWithFormat:@" RSI%d:%.2f", kStock_RSI_24_N, KLineModel.RSI_24.floatValue];
+            
+            string = [NSString stringWithFormat:@"%@%@%@%@", string1, string2, string3, string4];
+            
+            attrStrM = [[NSMutableAttributedString alloc] initWithString:string];
+            
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kAttrStrDefaultColor } range:NSMakeRange(0, string1.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA5LineColor } range:NSMakeRange(string1.length, string2.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA10LineColor } range:NSMakeRange(string1.length + string2.length, string3.length)];
+            [attrStrM addAttributes:@{ NSForegroundColorAttributeName : kStockMA20LineColor } range:NSMakeRange(string1.length + string2.length + string3.length, string4.length)];
+        }
+            break;
+        case YFStockBottomBarIndex_ARBR:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_OBV:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_WR:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_EMV:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_DMA:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_CCI:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_BIAS:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_ROC:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_MTM:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_CR:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_DMI:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_VR:
+        {
+            
+        }
+            break;
+            
+        case YFStockBottomBarIndex_TRXI:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_PSY:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_DPO:
+        {
+            
+        }
+            break;
+        case YFStockBottomBarIndex_ASI:
+        {
+            
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    return attrStrM;
+}
+
 //#pragma mark - 处理位置
 //// 获取 K线 的以及 volume线 的坐标转换 macd kdj 等
 //- (void)getPositionWithDrawKlineModelArray:(NSArray *)drawKLineModelArray pointStartX:(CGFloat)pointStartX KLineViewHeight:(CGFloat)KLineViewHeight volumeViewHeight:(CGFloat)volumeViewHeight bottomBarIndex:(YFStockBottomBarIndex)bottomBarIndex {
-//    
-//    
+//
+//
 //    NSMutableArray *tempDrawKLineModels = [NSMutableArray new];
-//    
+//
 //    // MinY MaxY
 //    CGFloat KLineMinY = kStockKLineViewKlineMinY;
 //    CGFloat KLineMaxY = KLineViewHeight - 1 * kStockKLineViewKlineMinY;
-//    
+//
 //    CGFloat volumeLineMinY = kStockVolumeLineViewVolumeLineMinY;
 //    CGFloat volumeLineMaxY = volumeViewHeight; // 到底部
-//    
+//
 //    CGFloat bottomNormalMinY = kStockVolumeLineViewVolumeLineMinY;
 //    CGFloat bottomNormalMaxY = volumeViewHeight - 2 * kStockVolumeLineViewVolumeLineMinY;
-//    
+//
 //    // k line
 //    CGFloat KLineUnitValue = (self.maxKLineValue - self.minKLineValue) / (KLineMaxY - KLineMinY);
 //    if (KLineUnitValue == 0) KLineUnitValue = 0.01f;
-//    
+//
 //    // volume line
 //    CGFloat volumeLineUnitValue = (self.maxVolumeLineValue - self.minVolumeLineValue) / (volumeLineMaxY - volumeLineMinY);
 //    if (volumeLineUnitValue == 0) volumeLineUnitValue = 0.01f;
-//    
+//
 //    // MACD line
 //    CGFloat MACDLineUnitValue = (self.MACDMaxValue - self.MACDMinValue) / (bottomNormalMinY - bottomNormalMaxY);
 //    if (MACDLineUnitValue == 0) MACDLineUnitValue = 0.01f;
-//    
+//
 //    // KDJ line
 //    CGFloat KDJLineUnitValue = (self.KDJMaxValue - self.KDJMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (KDJLineUnitValue == 0) KDJLineUnitValue = 0.01f;
-//    
+//
 //    // RSI
 //    CGFloat RSILineUnitValue = (self.RSIMaxValue - self.RSIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (RSILineUnitValue == 0) RSILineUnitValue = 0.01f;
-//    
+//
 //    // ARBR
 //    CGFloat ARBRLineUnitValue = (self.ARBRMaxValue - self.ARBRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (ARBRLineUnitValue == 0) ARBRLineUnitValue = 0.01f;
-//    
+//
 //    // OBV
 //    CGFloat OBVLineUnitValue = (self.OBVMaxValue - self.OBVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (OBVLineUnitValue == 0) OBVLineUnitValue = 0.01f;
-//    
+//
 //    // WR
 //    CGFloat WRLineUnitValue = (self.WRMaxValue - self.WRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (WRLineUnitValue == 0) WRLineUnitValue = 0.01f;
-//    
+//
 //    // EMV
 //    CGFloat EMVLineUnitValue = (self.EMVMaxValue - self.EMVMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (EMVLineUnitValue == 0) EMVLineUnitValue = 0.01f;
-//    
+//
 //    // DMA
 //    CGFloat DMALineUnitValue = (self.DMAMaxValue - self.DMAMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (DMALineUnitValue == 0) DMALineUnitValue = 0.01f;
-//    
+//
 //    // CCI
 //    CGFloat CCILineUnitValue = (self.CCIMaxValue - self.CCIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (CCILineUnitValue == 0) CCILineUnitValue = 0.01f;
-//    
+//
 //    // BIAS
 //    CGFloat BIASLineUnitValue = (self.BIASMaxValue - self.BIASMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (BIASLineUnitValue == 0) BIASLineUnitValue = 0.01f;
-//    
+//
 //    // ROC
 //    CGFloat ROCLineUnitValue = (self.ROCMaxValue - self.ROCMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (ROCLineUnitValue == 0) ROCLineUnitValue = 0.01f;
-//    
+//
 //    // MTM
 //    CGFloat MTMLineUnitValue = (self.MTMMaxValue - self.MTMMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (MTMLineUnitValue == 0) MTMLineUnitValue = 0.01f;
-//    
+//
 //    // CR
 //    CGFloat CRLineUnitValue = (self.CRMaxValue - self.CRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (CRLineUnitValue == 0) CRLineUnitValue = 0.01f;
-//    
+//
 //    // DMI
 //    CGFloat DMILineUnitValue = (self.DMIMaxValue - self.DMIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (DMILineUnitValue == 0) DMILineUnitValue = 0.01f;
-//    
+//
 //    // VR
 //    CGFloat VRLineUnitValue = (self.VRMaxValue - self.VRMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (VRLineUnitValue == 0) VRLineUnitValue = 0.01f;
-//    
+//
 //    // TRIX
 //    CGFloat TRIXLineUnitValue = (self.TRIXMaxValue - self.TRIXMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (TRIXLineUnitValue == 0) TRIXLineUnitValue = 0.01f;
-//    
+//
 //    // PSY
 //    CGFloat PSYLineUnitValue = (self.PSYMaxValue - self.PSYMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (PSYLineUnitValue == 0) PSYLineUnitValue = 0.01f;
-//    
+//
 //    // DPO
 //    CGFloat DPOLineUnitValue = (self.DPOMaxValue - self.DPOMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (DPOLineUnitValue == 0) DPOLineUnitValue = 0.01f;
@@ -712,30 +891,30 @@
 //    // ASI
 //    CGFloat ASILineUnitValue = (self.ASIMaxValue - self.ASIMinValue) / (bottomNormalMaxY - bottomNormalMinY);
 //    if (ASILineUnitValue == 0) ASILineUnitValue = 0.01f;
-//    
+//
 //    // 便利
 //    [drawKLineModelArray enumerateObjectsUsingBlock:^(YFStock_KLineModel *model, NSUInteger idx, BOOL * _Nonnull stop) {
-//        
+//
 //#pragma mark - K线
 //        CGFloat xPosition = pointStartX + idx * ([YFStock_Variable KLineWidth] + [YFStock_Variable KLineGap]);
-//        
+//
 //        CGPoint highPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.highPrice.floatValue - self.minKLineValue) / KLineUnitValue));
 //        CGPoint lowPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.lowPrice.floatValue - self.minKLineValue) / KLineUnitValue));
 //        CGPoint openPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.openPrice.floatValue - self.minKLineValue) / KLineUnitValue));
 //        CGFloat closePointY = ABS(KLineMaxY - (model.closePrice.floatValue - self.minKLineValue) / KLineUnitValue);
-//        
+//
 //        //格式化openPoint和closePointY
 //        if(ABS(closePointY - openPoint.y) < kStockKLineKlineMinThick) { // open 跟 close 的 y 非常相近
-//            
+//
 //            if(openPoint.y > closePointY) { // 小者不变，大者更大
-//                
+//
 //                openPoint.y = closePointY + kStockKLineKlineMinThick;
-//                
+//
 //            } else if(openPoint.y < closePointY) {
-//                
+//
 //                closePointY = openPoint.y + kStockKLineKlineMinThick;
 //            } else { // openPointY == closePointY
-//                
+//
 //                if(idx > 0) {
 //
 //                    if(model.openPrice > model.preModel.closePrice) {
@@ -746,7 +925,7 @@
 //                        closePointY = openPoint.y + kStockKLineKlineMinThick;
 //                    }
 //                } else if(idx + 1 < drawKLineModelArray.count) {
-//                    
+//
 //                    // idx == 0 即第一个时
 ////                    id<YYLineDataModelProtocol> subKLineModel = drawKLineModels[idx+1];
 ////                    if(model.Close.floatValue < subKLineModel.Open.floatValue) {
@@ -755,19 +934,19 @@
 ////                        closePointY = openPoint.y + kStockKLineKlineMinThick;
 ////                    }
 //                } else {
-//                    
+//
 //                    openPoint.y = closePointY - kStockKLineKlineMinThick;
 //                }
 //            }
 //        }
-//        
+//
 //        CGPoint closePoint = CGPointMake(xPosition, closePointY);
-//        
+//
 //        model.openPricePositionPoint = openPoint;
 //        model.closePricePositionPoint = closePoint;
 //        model.highPricePositionPoint = highPoint;
 //        model.lowPricePositionPoint = lowPoint;
-//        
+//
 //#pragma mark - volume线
 //        CGFloat yPosition = ABS(volumeLineMaxY - (model.volume.integerValue - self.minVolumeLineValue) / volumeLineUnitValue); // start 的 y
 //        CGPoint startPoint = CGPointMake(xPosition, (ABS(yPosition - volumeLineMaxY) > 0 && ABS(yPosition - volumeLineMaxY) < 0.5) ? volumeLineMaxY - 0.5 : yPosition);
@@ -775,7 +954,7 @@
 //
 //        model.volumeStartPositionPoint = startPoint; // 上↑
 //        model.volumeEndPositionPoint = endPoint; // 下↓
-//        
+//
 //#pragma mark - MA线
 //        model.MA_5PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_5.floatValue - self.minKLineValue) / KLineUnitValue));
 //        model.MA_10PositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.MA_10.floatValue - self.minKLineValue) / KLineUnitValue));
@@ -787,33 +966,33 @@
 //        model.MACD_DEAPositionPoint = CGPointMake(xPosition, model.MACD_DEA.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
 //        model.MACD_BARStartPositionPoint = CGPointMake(xPosition, volumeViewHeight * 0.5);
 //        model.MACD_BAREndPositionPoint = CGPointMake(xPosition, model.MACD_BAR.floatValue / MACDLineUnitValue + volumeViewHeight * 0.5);
-//        
+//
 //#pragma mark - KDJ
 //        model.KDJ_KPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_K.floatValue - self.KDJMinValue) / KDJLineUnitValue);
 //        model.KDJ_DPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_D.floatValue - self.KDJMinValue) / KDJLineUnitValue);
 //        model.KDJ_JPositionPoint = CGPointMake(xPosition, bottomNormalMaxY - (model.KDJ_J.floatValue - self.KDJMinValue) / KDJLineUnitValue);
-//        
+//
 //#pragma mark - RSI
 //        model.RSI_6PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_6.floatValue - self.RSIMinValue) / RSILineUnitValue));
 //        model.RSI_12PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_12.floatValue - self.RSIMinValue) / RSILineUnitValue));
 //        model.RSI_24PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.RSI_24.floatValue - self.RSIMinValue) / RSILineUnitValue));
-//        
+//
 //#pragma mark - BOLL
 //        model.BOLL_UpperPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_UPPER.floatValue - self.minKLineValue) / KLineUnitValue));
 //        model.BOLL_MidPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_MID.floatValue - self.minKLineValue) / KLineUnitValue));
 //        model.BOLL_LowerPositionPoint = CGPointMake(xPosition, ABS(KLineMaxY - (model.BOLL_LOWER.floatValue - self.minKLineValue) / KLineUnitValue));
-//        
+//
 //#pragma mark - ARBR
 //        model.ARBR_ARPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_AR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
 //        model.ARBR_BRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ARBR_BR.floatValue - self.ARBRMinValue) / ARBRLineUnitValue));
-//        
+//
 //#pragma mark - OBV
 //        model.OBVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.OBV.floatValue - self.OBVMinValue) / OBVLineUnitValue));
 //
 //#pragma mark - WR
 //        model.WR_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_1.floatValue - self.WRMinValue) / WRLineUnitValue));
 //        model.WR_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.WR_2.floatValue - self.WRMinValue) / WRLineUnitValue));
-//        
+//
 //#pragma mark - EMV
 //        model.EMVPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV.floatValue - self.EMVMinValue) / EMVLineUnitValue));
 //        model.EMV_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.EMV_MA.floatValue - self.EMVMinValue) / EMVLineUnitValue));
@@ -824,7 +1003,7 @@
 //
 //#pragma mark - CCI
 //        model.CCIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.CCI.floatValue - self.CCIMinValue) / CCILineUnitValue));
-//        
+//
 //#pragma mark - BIAS
 //        model.BIAS_1PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_1.floatValue - self.BIASMinValue) / BIASLineUnitValue));
 //        model.BIAS_2PositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.BIAS_2.floatValue - self.BIASMinValue) / BIASLineUnitValue));
@@ -833,7 +1012,7 @@
 //#pragma mark - ROC
 //        model.ROCPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC.floatValue - self.ROCMinValue) / ROCLineUnitValue));
 //        model.ROC_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.ROC_MA.floatValue - self.ROCMinValue) / ROCLineUnitValue));
-//        
+//
 //#pragma mark - MTM
 //        model.MTMPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM.floatValue - self.MTMMinValue) / MTMLineUnitValue));
 //        model.MTM_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.MTM_MA.floatValue - self.MTMMinValue) / MTMLineUnitValue));
@@ -848,7 +1027,7 @@
 //        model.DMI_MDIPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_MDI.floatValue - self.DMIMinValue) / DMILineUnitValue));
 //        model.DMI_ADXPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADX.floatValue - self.DMIMinValue) / DMILineUnitValue));
 //        model.DMI_ADXRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DMI_ADXR.floatValue - self.DMIMinValue) / DMILineUnitValue));
-//        
+//
 //#pragma mark - VR
 //        model.VRPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR.floatValue - self.VRMinValue) / VRLineUnitValue));
 //        model.VR_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.VR_MA.floatValue - self.VRMinValue) / VRLineUnitValue));
@@ -865,15 +1044,15 @@
 //#pragma mark - DPO
 //        model.DPOPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO.floatValue - self.DPOMinValue) / DPOLineUnitValue));
 //        model.DPO_MAPositionPoint = CGPointMake(xPosition, ABS(bottomNormalMaxY - (model.DPO_MA.floatValue - self.DPOMinValue) / DPOLineUnitValue));
-//        
+//
 //#pragma mark - ASI
 //        model.ASIPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI.floatValue - self.ASIMinValue) / ASILineUnitValue));
 //        model.ASI_MAPositionPoint = CGPointMake(xPosition, (bottomNormalMaxY - (model.ASI_MA.floatValue - self.ASIMinValue) / ASILineUnitValue));
 //
-//        
+//
 //        [tempDrawKLineModels addObject:model];
 //    }];
-//    
+//
 //    self.drawKLineModels = tempDrawKLineModels;
 //}
 

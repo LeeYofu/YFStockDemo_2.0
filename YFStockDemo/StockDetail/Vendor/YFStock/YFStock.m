@@ -212,8 +212,6 @@
         }
         
         self.bottomBar.hidden = [YFStock_Variable selectedIndex] == 0;
-        
-
     } else { // bottom bar
                 
         // YFStock_KLine 的下面的belowView根据index类型重新绘制

@@ -15,6 +15,7 @@ static CGFloat YFStockKlineLineCap = 2; // 默认的K线之间的间距
 static NSInteger YFStockKlineRowCount = 4; // K线的分区数目/行数
 static BOOL YFStockIsFullScreen = NO; // 是否是全屏状态，默认为NO
 static NSInteger YFStockSelectedIndex = 0; // 选中的下标
+static NSInteger YFStockBottomBarSelectedIndex = 0;
 static NSInteger YFStockNormalScreenLastedSelectedIndex = 0; // 非全屏最后一次选中的下标
 static CGFloat YFStockNormalScreenLastedKLineWidth = 0; // 非全屏状态下最后展示的K线宽
 static CGFloat YFStockTimeLineLineWidth = 1;
@@ -70,6 +71,11 @@ static CGFloat YFStockTimeLineLineGap = 0.2;
 + (BOOL)isFullScreen {
     
     return YFStockIsFullScreen;
+}
+
++ (NSInteger)bottomBarSelectedIndex {
+    
+    return YFStockBottomBarSelectedIndex;
 }
 
 #pragma mark - setter
@@ -138,6 +144,11 @@ static CGFloat YFStockTimeLineLineGap = 0.2;
 + (void)setSelectedIndex:(NSInteger)selectedIndex {
     
     YFStockSelectedIndex = selectedIndex;
+}
+
++ (void)setBottomBarSelectedIndex:(NSInteger)bottomBarSelectedIndex {
+    
+    YFStockBottomBarSelectedIndex = bottomBarSelectedIndex;
 }
 
 + (void)setTimeLineWidth:(CGFloat)timeLineWidth {

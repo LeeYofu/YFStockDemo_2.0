@@ -75,7 +75,7 @@
     topBgView.backgroundColor = kCustomRGBColor(26, 181, 70, 1.0f);
     [self.view addSubview:topBgView];
     
-    self.stock = [YFStock stockWithFrame:CGRectMake(0, topBgView.maxY, kScreenWidth, self.view.height - 45 - topBgView.height - 140) dataSource:self];
+    self.stock = [YFStock stockWithFrame:CGRectMake(0, topBgView.maxY, kScreenWidth, self.view.height - 45 - topBgView.height - 100) dataSource:self];
     [self.view addSubview:self.stock.view];
     
     UIButton *fullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];

@@ -57,15 +57,15 @@
     
     // top view
     UIView *topBgView = [UIView new];
-    topBgView.frame = CGRectMake(0, 0, kScreenWidth, 45);
+    topBgView.frame = CGRectMake(0, 0, kScreenWidth, 50);
     topBgView.backgroundColor = kCustomRGBColor(26, 181, 70, 1.0f);
     [self.view addSubview:topBgView];
     
-    self.stock = [YFStock stockWithFrame:CGRectMake(0, topBgView.maxY, kScreenWidth, self.view.height - 80 - topBgView.height) dataSource:self];
+    self.stock = [YFStock stockWithFrame:CGRectMake(0, topBgView.maxY, kScreenWidth, self.view.height - topBgView.height) dataSource:self];
     [self.view addSubview:self.stock.view];
     
     UIButton *fullScreenButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    fullScreenButton.frame = CGRectMake(self.view.width - 45, 0, 45, 45);
+    fullScreenButton.frame = CGRectMake(self.view.width - topBgView.height, 0, topBgView.height, topBgView.height);
     fullScreenButton.backgroundColor = kBlueColor;
     [fullScreenButton addTarget:self action:@selector(exitFullScreen) forControlEvents:UIControlEventTouchUpInside];
     [topBgView addSubview:fullScreenButton];

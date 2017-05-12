@@ -65,6 +65,7 @@
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(event_longPressAction:)];
     longPress.minimumPressDuration = 0.2f;
     [self addGestureRecognizer:longPress];
+    
 }
 
 #pragma mark - 布局子视图
@@ -72,16 +73,17 @@
     
     [self create_aboveView_belowView];
     [self createBackgroundLine];
+    [self createBoardLine];
 }
 
 - (void)create_aboveView_belowView {
     
-    CGFloat aboveViewBelowViewTotalHeight = self.height - kStockTimeViewHeight - kStockBottomBarHeight;
+    CGFloat aboveViewBelowViewTotalHeight = self.height - kStockTimeViewHeight - kStockBottomBarHeight - 2 * kStockKLineAboveViewTopBottomPadding - 2 * kStockKLineBelowViewTopBottomPadding;
     CGFloat aboveViewHeight = aboveViewBelowViewTotalHeight * (1 - [YFStock_Variable KlineVolumeViewHeightRadio]);
     CGFloat belowViewHeight = aboveViewBelowViewTotalHeight - aboveViewHeight;
-    
-    self.aboveView = [self createTableViewWithFrame:CGRectMake(0, 0, self.width, aboveViewHeight)];
-    self.belowView = [self createTableViewWithFrame:CGRectMake(0, self.height - belowViewHeight, self.width, belowViewHeight)];
+
+    self.aboveView = [self createTableViewWithFrame:CGRectMake(0, kStockKLineAboveViewTopBottomPadding, self.width, aboveViewHeight)];
+    self.belowView = [self createTableViewWithFrame:CGRectMake(0, self.height - belowViewHeight - kStockKLineBelowViewTopBottomPadding, self.width, belowViewHeight)];
     
     [self.aboveView registerClass:[YF_Stock_KLineAboveViewTableViewCell class] forCellReuseIdentifier:@"aboveCell"];
     [self.belowView registerClass:[YF_Stock_KLineBelowViewTableViewCell class] forCellReuseIdentifier:@"belowCell"];
@@ -130,7 +132,7 @@
         [self insertSubview:backgroundLine belowSubview:self.aboveView];
         
         // value label
-        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
+        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth - 5, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
         [self addSubview:label];
         
         [self.aboveValueLabels addObject:label];
@@ -148,7 +150,7 @@
         [self insertSubview:backgroundLine belowSubview:self.belowView];
         
         // value label
-        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
+        UILabel *label = [self getValueLabelWithFrame:CGRectMake(backgroundLine.width - valueLabelWidth - 5, backgroundLine.y - 0.5 * valueLabelHeight, valueLabelWidth, valueLabelHeight)];
         [self addSubview:label];
         
         [self.belowValueLabels addObject:label];
@@ -162,6 +164,35 @@
     label.textAlignment = NSTextAlignmentRight;
     label.textColor = kCustomRGBColor(103, 103, 103, 1.0f);;
     return label;
+}
+
+- (void)createBoardLine {
+    
+    UIColor *boardLineColor = kCustomRGBColor(203, 205, 212, 1.0);
+    
+    // 顶部
+    UIView *backgroundLine1 = [UIView new];
+    backgroundLine1.backgroundColor = boardLineColor;
+    backgroundLine1.frame = CGRectMake(self.aboveView.x, 0, self.aboveView.width, kStockPartLineHeight);
+    [self insertSubview:backgroundLine1 belowSubview:self.aboveView];
+    
+    // 中间上
+    UIView *backgroundLine2 = [UIView new];
+    backgroundLine2.backgroundColor = boardLineColor;
+    backgroundLine2.frame = CGRectMake(self.aboveView.x, self.aboveView.maxY + kStockKLineAboveViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
+    [self insertSubview:backgroundLine2 belowSubview:self.aboveView];
+    
+    // 中间下
+    UIView *backgroundLine3 = [UIView new];
+    backgroundLine3.backgroundColor = boardLineColor;
+    backgroundLine3.frame = CGRectMake(self.aboveView.x, self.belowView.y - kStockKLineBelowViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
+    [self insertSubview:backgroundLine3 belowSubview:self.aboveView];
+    
+    // 底部
+    UIView *backgroundLine4 = [UIView new];
+    backgroundLine4.backgroundColor = boardLineColor;
+    backgroundLine4.frame = CGRectMake(self.aboveView.x, self.belowView.maxY + kStockKLineBelowViewTopBottomPadding, self.aboveView.width, kStockPartLineHeight);
+    [self insertSubview:backgroundLine4 belowSubview:self.aboveView];
 }
 
 #pragma mark - tableView代理方法

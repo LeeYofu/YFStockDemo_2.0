@@ -11,8 +11,14 @@
 
 #pragma mark - 尺寸 **********  **********
 
-#define kStockTopBarHeight 31 // 顶部分类条的高度
+#define kStockKLineAboveViewTopBottomPadding 12
+#define kStockKLineBelowViewTopBottomPadding 5
+
+#define kStockTopBarHeight 35 // 顶部分类条的高度
 #define kStockMainViewTopGap 0 // 主要视图距离顶部分类条的距离
+
+#define kStockTimeViewHeight 15 // 中间时间条的高度 15
+#define kStockBottomBarHeight kStockTopBarHeight // MACD、KDJ筛选条高度
 
 // KLine视图scrollView的上线左右间距
 #define kStockKLineScrollViewLeftGap 0
@@ -26,7 +32,7 @@
 // K线的最大、最小宽度
 #define kStockKlineMinWidth 3
 #define kStockKlineMaxWidth 35
-#define kStockKlineDefaultWidth 6
+#define kStockKlineDefaultWidth 5
 
 // K线的最大最小间距
 #define kStockKlineMinGap 1
@@ -36,8 +42,6 @@
 #define kStockKLineMaxRowCount 4
 #define kStockKLineMinRowCount 1
 
-#define kStockTimeViewHeight 15 // 中间时间条的高度 15
-#define kStockBottomBarHeight 28 // MACD、KDJ筛选条高度
 
 #define kStockKLineViewKlineMinY (8 + kStockKLineScrollViewInsideTopBottomPadding) // K线视图中上部K显示图距离视图上下最小间距
 
@@ -47,7 +51,7 @@
 
 #define kStockShadowLineWidth 1.0 // 竖线线宽
 
-#define kStockPartLineHeight (1 / [UIScreen mainScreen].scale) // 分割线高度
+#define kStockPartLineHeight 0.8 // 分割线高度 (1 / [UIScreen mainScreen].scale)
 
 #define kStockVolumeLineViewVolumeLineMinY 10 // volumeLine距离顶部的最小高度
 
@@ -80,7 +84,7 @@
 #define kStockDEALineColor kCustomRGBColor(236, 50, 248, 1.0)
 
 
-#define kStockKlinePartLineColor kCustomRGBColor(215, 215, 215, 1.0) // K线分割线颜色
+#define kStockKlinePartLineColor kCustomRGBColor(240, 242, 246, 1.0) // K线分割线颜色
 
 // 顶部工具条正常字体颜色跟选中字体颜色
 #define kStockTopBarNormalFontColor kCustomRGBColor(22, 22, 22, 0.7f)

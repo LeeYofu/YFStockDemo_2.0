@@ -65,11 +65,10 @@
 
 - (void)createBottomBarView {
     
-    CGFloat aboveViewBelowViewTotalHeight = self.mainView.height - kStockTimeViewHeight - kStockBottomBarHeight;
+    CGFloat aboveViewBelowViewTotalHeight = self.mainView.height - kStockTimeViewHeight - kStockBottomBarHeight - 2 * kStockKLineAboveViewTopBottomPadding - 2 * kStockKLineBelowViewTopBottomPadding;
     CGFloat aboveViewHeight = aboveViewBelowViewTotalHeight * (1 - [YFStock_Variable KlineVolumeViewHeightRadio]);
-    CGFloat belowViewHeight = aboveViewBelowViewTotalHeight - aboveViewHeight;
     
-    self.bottomBar = [[YFStock_TopBar alloc] initWithFrame:CGRectMake(0, self.mainView.height - kStockBottomBarHeight - belowViewHeight + self.topBar.maxY, self.view.width, kStockBottomBarHeight) titles:@[ @"MACD", @"KDJ", @"RSI", @"ARBR", @"OBV", @"WR", @"EMV", @"DMA", @"CCI", @"BIAS", @"ROC", @"MTM", @"CR", @"DMI", @"VR", @"TRIX", @"PSY", @"DPO", @"ASI", @"SAR" ] topBarSelectedIndex:0];
+    self.bottomBar = [[YFStock_TopBar alloc] initWithFrame:CGRectMake(0, self.topBar.height + aboveViewHeight + 2 * kStockKLineAboveViewTopBottomPadding + 15, self.view.width, kStockBottomBarHeight) titles:@[ @"MACD", @"KDJ", @"RSI", @"ARBR", @"OBV", @"WR", @"EMV", @"DMA", @"CCI", @"BIAS", @"ROC", @"MTM", @"CR", @"DMI", @"VR", @"TRIX", @"PSY", @"DPO", @"ASI", @"SAR" ] topBarSelectedIndex:0];
     self.bottomBar.delegate = self;
     [self.view addSubview:self.bottomBar];
     

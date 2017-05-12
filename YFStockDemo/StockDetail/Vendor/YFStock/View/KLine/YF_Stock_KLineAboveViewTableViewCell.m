@@ -137,9 +137,9 @@
     
     [super layoutSubviews];
     
-    self.timeLabel.frame = CGRectMake(-15, -30 + self.cHeight * 0.5, 15, 60);
+    self.timeLabel.frame = CGRectMake(-15 - kStockKLineAboveViewTopBottomPadding, -30 + self.cHeight * 0.5, 15, 60);
     
-    self.partLine.frame = CGRectMake(0, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth, kStockPartLineHeight);
+    self.partLine.frame = CGRectMake(-kStockKLineAboveViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineAboveViewTopBottomPadding, kStockPartLineHeight);
 }
 
 - (void)KLineAboveMaxMinValueChanged:(NSNotification *)notify {

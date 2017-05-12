@@ -117,7 +117,7 @@
     
     [super layoutSubviews];
         
-    self.partLine.frame = CGRectMake(0, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth, kStockPartLineHeight);
+    self.partLine.frame = CGRectMake(-kStockKLineBelowViewTopBottomPadding, self.cHeight * 0.5 - 0.5 * kStockPartLineHeight, self.cWidth + 2 * kStockKLineBelowViewTopBottomPadding, kStockPartLineHeight);
 }
 
 - (void)KLineBelowMaxMinValueChanged:(NSNotification *)notify {

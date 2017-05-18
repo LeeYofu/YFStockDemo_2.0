@@ -700,6 +700,15 @@
 //            _ASI = [self.allModelArray[kStock_ASI_N] ASI];
             _ASI = @0;
         }
+        
+//        NSArray *tempArray = [self getPreviousArrayContainsSelfWithN:150];
+//        CGFloat sum = 0;
+//        for (YFStock_KLineModel *model in tempArray) {
+//            
+//            sum += [model getSIWithN:0];
+//        }
+//        _ASI = @(sum);
+        
     }
     return _ASI;
 }

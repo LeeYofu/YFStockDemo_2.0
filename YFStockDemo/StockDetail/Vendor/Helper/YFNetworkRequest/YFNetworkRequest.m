@@ -10,7 +10,7 @@
 #import "YYCache.h"
 #import "NSJSONSerialization+YFJson.h"
 
-#define BASEURLSTRING @""
+#define BASEURLSTRING @"https://www.baidu.com"
 
 typedef NS_ENUM(NSUInteger, YFNetworkRequestType) {
     

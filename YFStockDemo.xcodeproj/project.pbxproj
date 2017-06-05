@@ -74,6 +74,8 @@
 		23AFEF451EADDAE100EA7ECC /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 23AFEF441EADDAE100EA7ECC /* libsqlite3.tbd */; };
 		23AFEF481EADDDC200EA7ECC /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEF471EADDDC200EA7ECC /* CustomTabBarController.m */; };
 		23AFEF4B1EADE7DA00EA7ECC /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFEF4A1EADE7DA00EA7ECC /* BaseViewController.m */; };
+		23C140EB1EE526960071209E /* FHHFPSIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C140E81EE526960071209E /* FHHFPSIndicator.m */; };
+		23C140EC1EE526960071209E /* UIWindow+FHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 23C140EA1EE526960071209E /* UIWindow+FHH.m */; };
 		23CB46C01EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CB46BD1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m */; };
 		23CB46C11EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23CB46BF1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -209,6 +211,10 @@
 		23AFEF471EADDDC200EA7ECC /* CustomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarController.m; sourceTree = "<group>"; };
 		23AFEF491EADE7DA00EA7ECC /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		23AFEF4A1EADE7DA00EA7ECC /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		23C140E71EE526960071209E /* FHHFPSIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHHFPSIndicator.h; sourceTree = "<group>"; };
+		23C140E81EE526960071209E /* FHHFPSIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHHFPSIndicator.m; sourceTree = "<group>"; };
+		23C140E91EE526960071209E /* UIWindow+FHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+FHH.h"; sourceTree = "<group>"; };
+		23C140EA1EE526960071209E /* UIWindow+FHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+FHH.m"; sourceTree = "<group>"; };
 		23CB46BC1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineAboveViewTableViewCell.h; sourceTree = "<group>"; };
 		23CB46BD1EC545130019750A /* YF_Stock_KLineAboveViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YF_Stock_KLineAboveViewTableViewCell.m; sourceTree = "<group>"; };
 		23CB46BE1EC545130019750A /* YF_Stock_KLineBelowViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YF_Stock_KLineBelowViewTableViewCell.h; sourceTree = "<group>"; };
@@ -316,6 +322,7 @@
 		23AFEE771EADDAAF00EA7ECC /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				23C140E61EE526960071209E /* FHHFPSIndicator */,
 				23AFEE781EADDAAF00EA7ECC /* Helper */,
 				23AFEEA31EADDAAF00EA7ECC /* YFStock */,
 			);
@@ -591,6 +598,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		23C140E61EE526960071209E /* FHHFPSIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				23C140E71EE526960071209E /* FHHFPSIndicator.h */,
+				23C140E81EE526960071209E /* FHHFPSIndicator.m */,
+				23C140E91EE526960071209E /* UIWindow+FHH.h */,
+				23C140EA1EE526960071209E /* UIWindow+FHH.m */,
+			);
+			path = FHHFPSIndicator;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -686,6 +704,7 @@
 				23AFEEFA1EADDAAF00EA7ECC /* YFStock_DataHandler.m in Sources */,
 				23AFEEDE1EADDAAF00EA7ECC /* CustomNavigationController.m in Sources */,
 				23AFEEE41EADDAAF00EA7ECC /* MJProperty.m in Sources */,
+				23C140EC1EE526960071209E /* UIWindow+FHH.m in Sources */,
 				23AFEEF71EADDAAF00EA7ECC /* YFStock_TimeLineModel.m in Sources */,
 				23AFEF351EADDAD300EA7ECC /* AFURLRequestSerialization.m in Sources */,
 				23AFEEE61EADDAAF00EA7ECC /* MJPropertyType.m in Sources */,
@@ -716,6 +735,7 @@
 				23AFEF091EADDAAF00EA7ECC /* YFStock_TopBar.m in Sources */,
 				23AFEF3E1EADDAD300EA7ECC /* UIButton+AFNetworking.m in Sources */,
 				23AFEF021EADDAAF00EA7ECC /* YFStock_TopBarMaskView.m in Sources */,
+				23C140EB1EE526960071209E /* FHHFPSIndicator.m in Sources */,
 				23AFEF371EADDAD300EA7ECC /* AFURLSessionManager.m in Sources */,
 				23AFEEE51EADDAAF00EA7ECC /* MJPropertyKey.m in Sources */,
 				23AFEEE91EADDAAF00EA7ECC /* NSObject+MJKeyValue.m in Sources */,

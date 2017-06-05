@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "CustomTabBarController.h"
+#import "FHHFPSIndicator.h"
 
 @interface AppDelegate ()
 
@@ -25,6 +26,9 @@
     self.window.rootViewController = tabC;
     
     [self.window makeKeyAndVisible];
+    
+    //
+    [[FHHFPSIndicator sharedFPSIndicator] show];
     
     return YES;
 }

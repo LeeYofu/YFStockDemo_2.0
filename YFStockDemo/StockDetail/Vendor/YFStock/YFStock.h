@@ -26,7 +26,6 @@
 
 @optional
 
-
 @end
 
 @interface YFStock : NSObject

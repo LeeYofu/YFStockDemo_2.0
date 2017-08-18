@@ -78,6 +78,9 @@
     [self createBackgroundLine];
     [self createBoardLine];
     [self create_aboveLabel_belowLabel];
+    
+//    self.aboveView.contentInset = UIEdgeInsetsMake(0, 0, 100, 0);
+//    self.belowView.contentInset = self.aboveView.contentInset;
 }
 
 - (void)create_aboveView_belowView {
@@ -624,7 +627,9 @@
         
         _lastHeight = _currentHeight;
         self.aboveView.scrollEnabled = YES;
-    }}
+    }
+
+}
 
 - (void)event_longPressAction:(UILongPressGestureRecognizer *)longPress {
     
